@@ -45,31 +45,27 @@ Comprehensive linting for Python projects using:
 
 ### Python Projects (Recommended Method)
 
-The easiest way to use these configurations:
+Use Ruff's `extend` feature for automatic configuration sharing:
 
 ```bash
-# 1. Install the configuration package
-pip install agentic-guardrails
+# One-time setup: Download shared config
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
 
-# 2. Copy configs to your project
-lint-configs copy
-
-# 3. Customize for your project
-# Edit pyproject.toml to add your package name
+# In each project's pyproject.toml:
+# [tool.ruff]
+# extend = "${HOME}/.ruff.toml"
+# target-version = "py39"
 ```
 
-**What this does:**
-- ✅ Copies canonical linting config to your project
-- ✅ Works with all tools: ruff, mypy, pylint, pytest, black
-- ✅ No `--config` flags needed
-- ✅ Version-controlled and customizable
-- ✅ Easy to update: `pip install --upgrade agentic-guardrails && lint-configs copy`
+**What this gives you:**
+- ✅ Update once, applies to all projects automatically
+- ✅ Zero duplication across projects
+- ✅ No version drift or manual syncing
+- ✅ Works everywhere: CI/CD, editors, command line
 
-See the [Python README](./python/README.md) for detailed instructions and alternative methods.
+See the [Python README](./python/README.md) for complete setup instructions.
 
-### Alternative Methods
-
-#### Method 1: Direct Download (No Package Install)
+### Alternative: Direct Copy
 
 Copy the configuration file directly into your project:
 
@@ -84,19 +80,6 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 - Complete control over configuration
 - No dependencies
 - Easy to customize per-project
-
-#### Method 2: Install from GitHub Packages
-
-Install the configuration package from GitHub Packages:
-
-```bash
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
-```
-
-Then copy to your project:
-```bash
-lint-configs copy
-```
 
 ### Method 3: GitHub Template
 

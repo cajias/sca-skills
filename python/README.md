@@ -4,66 +4,66 @@ Canonical linting configuration for Python projects with minimal ignores and com
 
 ## Quick Start
 
-Choose one of the methods below to use this configuration in your Python project.
+The recommended way to use this configuration across all your projects.
 
-## Method 1: Copy from Package (Recommended)
+## Method 1: Shared Config with Extend (Recommended)
 
-The easiest way to use these configurations is to copy them into your project. This allows all linting tools to work without needing explicit `--config` flags every time.
+Use Ruff's `extend` feature with a centralized config file. This approach provides automatic updates across all your projects.
+
+### One-Time Setup
 
 ```bash
-# 1. Install the configuration package
-pip install agentic-guardrails
-
-# 2. Copy the config to your project
-lint-configs copy
-
-# 3. Customize for your project (see output instructions)
-# Edit pyproject.toml to add your package name in:
-# - [tool.ruff.lint.isort] known-first-party
-# - [tool.coverage.run] source
+# Download the shared Ruff config to your home directory
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
 ```
 
-**If you already have a pyproject.toml:**
+### Per-Project Setup
 
-```bash
-# Option A: Creates pyproject-linters.toml (then manually merge)
-lint-configs copy
+In each project's `pyproject.toml`:
 
-# Option B: Automatically appends to existing pyproject.toml
-lint-configs copy --merge
-# (You'll need to review and remove any duplicate sections)
+```toml
+[tool.ruff]
+extend = "${HOME}/.ruff.toml"
+target-version = "py39"  # Or your Python version
+
+[tool.ruff.lint.isort]
+known-first-party = ["your_package"]  # Add your package name
 ```
 
-**Updating the configuration:**
+That's it! Ruff will automatically use the shared config.
+
+### Updating All Projects
+
+When you want to update the configuration across all projects:
 
 ```bash
-pip install --upgrade agentic-guardrails
-lint-configs copy  # Re-copy the updated config
+# Re-download the latest config
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+
+# All projects immediately use the new config - no per-project changes needed!
 ```
 
 **Benefits:**
-- ✅ Works out of the box with all tools (ruff, mypy, pylint, pytest)
-- ✅ No `--config` flags needed in commands
-- ✅ Version controlled in your repo
-- ✅ Easy to customize per-project
-- ✅ Clear attribution and update path
+- ✅ **Automatic propagation**: Update once, applies to all projects
+- ✅ **Zero duplication**: Single source of truth in `~/.ruff.toml`
+- ✅ **No version drift**: All projects always use latest config
+- ✅ **Simple setup**: Just one `extend` line in `pyproject.toml`
+- ✅ **Works everywhere**: CI/CD, editors, command line
+- ✅ **No dependencies**: Just Ruff and a config file
 
-**Programmatic API:**
+**For Other Tools (MyPy, Pylint, Black):**
 
-```python
-from lint_configs import copy_config_to_project
+These tools don't support `extend` from external files, so you'll need to copy their sections into your `pyproject.toml`:
 
-# Copy to current directory
-config_path = copy_config_to_project()
+```bash
+# Download the full config (includes all tools)
+curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject-linters.toml
 
-# Copy to specific directory
-config_path = copy_config_to_project(target_dir="./my-project")
-
-# Merge with existing pyproject.toml
-config_path = copy_config_to_project(merge_with_existing=True)
+# Copy the [tool.mypy], [tool.pylint.*], [tool.black] sections into your pyproject.toml
+# Then delete pyproject-linters.toml
 ```
 
-## Method 2: Direct Download (No Package Install)
+## Method 2: Direct Copy (Simplest)
 
 Copy the configuration directly into your project:
 
@@ -80,50 +80,21 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 - Easy to customize per-project
 - All tools (Ruff, MyPy, Pylint) configured in one file
 
-## Method 3: Use Package Configs with --config Flags (Advanced)
+## Method 3: Using the Python Package (Legacy)
 
-For advanced users who want to keep configs in the package without copying:
+If you previously installed the Python package, you can still use it to get the config path:
 
 ```bash
-# 1. Install the package
 pip install agentic-guardrails
-
-# 2. Use with explicit config paths
-CONFIG=$(python -c "from lint_configs import get_python_config_path; print(get_python_config_path())")
-ruff check --config $CONFIG .
-mypy --config-file $CONFIG .
 ```
 
-**Benefits:**
-- Zero duplication
-- Automatic updates when you upgrade the package
-
-**Drawbacks:**
-- Requires explicit --config flags every time
-- More complex CI/CD setup
-- Not the recommended approach for most projects
-
-## Method 4: Install from Git
-
-Install the package directly from GitHub:
-
-```bash
-# Latest version
-pip install git+https://github.com/cajias/lint-configs.git@main
-
-# Specific version
-pip install git+https://github.com/cajias/lint-configs.git@v1.0.0
+```python
+from lint_configs import get_python_config_path
+config_path = get_python_config_path()
+print(config_path)  # Use with --config flag
 ```
 
-In `requirements-dev.txt`:
-```
-agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0
-```
-
-**Benefits:**
-- No need to publish to PyPI
-- Can use for private repositories
-- Version control via git tags
+**Note:** This approach requires using `--config` flags with every linting command, which is less convenient than Method 1's `extend` approach.
 
 ## Required Dependencies
 

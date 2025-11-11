@@ -23,9 +23,6 @@ Homepage = "https://github.com/cajias/lint-configs"
 Repository = "https://github.com/cajias/lint-configs"
 Issues = "https://github.com/cajias/lint-configs/issues"
 
-[project.scripts]
-lint-configs = "lint_configs.__main__:main"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
