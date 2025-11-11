@@ -6,55 +6,84 @@ Canonical linting configuration for Python projects with minimal ignores and com
 
 Choose one of the methods below to use this configuration in your Python project.
 
-## Method 1: Direct Copy (Simplest)
+## Method 1: Pip Package (Recommended)
+
+Install as a package and extend in your `pyproject.toml`:
+
+```bash
+# Install the configuration package
+pip install cajias-linter-configs
+
+# Or add to requirements-dev.txt
+echo 'cajias-linter-configs>=1.0.0' >> requirements-dev.txt
+```
+
+Then in your `pyproject.toml`:
+
+```toml
+[tool.ruff]
+extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
+line-length = 120
+
+[tool.ruff.lint.isort]
+known-first-party = ["your_package"]  # Add your package name
+
+[tool.coverage.run]
+source = ["your_package"]  # Add your package name
+```
+
+**Benefits:**
+- Version pinning: `cajias-linter-configs==1.0.0`
+- Easy updates: `pip install --upgrade cajias-linter-configs`
+- Works in CI/CD automatically
+- No git submodules or manual copying
+- Professional approach
+
+**Note:** For MyPy and Pylint, you'll need to copy their configurations to your `pyproject.toml`, or use the Python API:
+
+```python
+from lint_configs import get_python_config_path
+print(get_python_config_path())  # Get full path to config file
+```
+
+## Method 2: Direct Copy (Simplest)
 
 Copy the configuration directly into your project:
 
 ```bash
-# Download and append to your pyproject.toml
-curl https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject-linters.toml >> pyproject.toml
-```
+# Download the config file
+curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject.toml
 
-Or manually copy the tool sections from `pyproject-linters.toml` into your project's `pyproject.toml`.
-
-## Method 2: Git Submodule (Recommended for Teams)
-
-Add this repository as a submodule to keep configs in sync:
-
-```bash
-# In your project root
-git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
-git submodule update --init
-
-# Copy the config (one-time)
-cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
-
-# Or create a symlink
-ln -s .lint-configs/python/pyproject-linters.toml ./pyproject.toml
-
-# To update later
-git submodule update --remote
+# Or copy just the [tool.*] sections into your existing pyproject.toml
 ```
 
 **Benefits:**
-- Easy to keep configurations in sync across projects
-- Version controlled config updates
-- One source of truth for the organization
+- Complete control over configuration
+- No dependencies
+- Easy to customize per-project
+- All tools (Ruff, MyPy, Pylint) configured in one file
 
-## Method 3: Reference via extend (Ruff only)
+## Method 3: Install from Git
 
-If you're using Ruff, you can extend the base configuration:
+Install the package directly from GitHub:
 
-```toml
-# In your pyproject.toml
-[tool.ruff]
-extend = "path/to/lint-configs/python/pyproject-linters.toml"
+```bash
+# Latest version
+pip install git+https://github.com/cajias/lint-configs.git@main
 
-# Override specific settings for your project
-line-length = 100  # If you need different from 120
+# Specific version
+pip install git+https://github.com/cajias/lint-configs.git@v1.0.0
 ```
 
-**Note:** This only works for Ruff. You'll still need to copy the MyPy, Pylint, and other tool configurations.
+In `requirements-dev.txt`:
+```
+cajias-linter-configs @ git+https://github.com/cajias/lint-configs.git@v1.0.0
+```
+
+**Benefits:**
+- No need to publish to PyPI
+- Can use for private repositories
+- Version control via git tags
 
 ## Required Dependencies
 

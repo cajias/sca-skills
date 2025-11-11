@@ -1,0 +1,217 @@
+# Canonical Python Linting Configuration
+# This configuration enforces strict code quality standards with minimal ignores.
+# Use this as a reference configuration for all Python projects.
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+# Enable comprehensive linting for code quality, duplication, and dead code detection
+select = [
+    "E",     # pycodestyle errors
+    "F",     # Pyflakes (includes unused imports F401, unused variables F841)
+    "I",     # isort (import sorting)
+    "B",     # flake8-bugbear (common bugs)
+    "W",     # pycodestyle warnings
+    "C90",   # McCabe complexity
+    "SIM",   # flake8-simplify (detect overly complex code)
+    "PIE",   # flake8-pie (miscellaneous lints, includes unused variables)
+    "PLR",   # Pylint refactoring (duplicate code, too many args, etc.)
+    "RET",   # flake8-return (return statement issues)
+    "ANN",   # flake8-annotations (require type hints)
+    "UP",    # pyupgrade (use modern Python syntax)
+    "D",     # pydocstyle (docstring conventions)
+    "N",     # pep8-naming
+    "S",     # flake8-bandit (security issues)
+    "BLE",   # flake8-blind-except
+    "A",     # flake8-builtins (avoid shadowing builtins)
+    "COM",   # flake8-commas
+    "C4",    # flake8-comprehensions
+    "DTZ",   # flake8-datetimez (timezone-aware datetime)
+    "T10",   # flake8-debugger (no debugger statements)
+    "EM",    # flake8-errmsg
+    "ISC",   # flake8-implicit-str-concat
+    "ICN",   # flake8-import-conventions
+    "G",     # flake8-logging-format
+    "INP",   # flake8-no-pep420
+    "PT",    # flake8-pytest-style
+    "Q",     # flake8-quotes
+    "RSE",   # flake8-raise
+    "SLOT",  # flake8-slots
+    "TID",   # flake8-tidy-imports
+    "TCH",   # flake8-type-checking (detect unused imports in type checking blocks)
+    "ARG",   # flake8-unused-arguments (detect unused function arguments)
+    "PTH",   # flake8-use-pathlib
+    "ERA",   # eradicate (detect commented-out code - DEAD CODE DETECTION)
+    "PGH",   # pygrep-hooks
+    "PL",    # Pylint (all rules, includes unreachable code W0101, pointless statements W0104)
+    "TRY",   # tryceratops (exception handling)
+    "FLY",   # flynt (f-string conversion)
+    "PERF",  # Perflint (performance anti-patterns)
+    "RUF",   # Ruff-specific rules (includes RUF100 - unused noqa comments)
+]
+
+# Only ignore rules that conflict with Black or are false positives
+ignore = [
+    "E203",  # Whitespace before ':' (conflicts with Black)
+    "E501",  # Line too long (handled by Black)
+]
+
+# Configure per-file ignores for test files
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",    # Allow assert statements in tests
+    "ANN001",  # Missing type annotation for function argument
+    "ANN201",  # Missing return type annotation
+    "PLR2004", # Allow magic values in tests
+    "PLR0913", # Allow many arguments in test functions
+]
+"**/test_*.py" = [
+    "S101",    # Allow assert statements in tests
+    "ANN001",  # Missing type annotation for function argument
+    "ANN201",  # Missing return type annotation
+    "PLR2004", # Allow magic values in tests
+    "PLR0913", # Allow many arguments in test functions
+]
+
+# Configure complexity thresholds
+[tool.ruff.lint.mccabe]
+max-complexity = 10  # Flag functions with complexity > 10
+
+[tool.ruff.lint.pylint]
+max-args = 5  # Maximum number of arguments for a function
+max-branches = 12  # Maximum number of branches in a function
+max-returns = 6  # Maximum number of return statements
+max-statements = 50  # Maximum number of statements in a function
+
+# Pydocstyle configuration
+[tool.ruff.lint.pydocstyle]
+convention = "google"  # Use Google-style docstrings
+
+# isort configuration
+[tool.ruff.lint.isort]
+known-first-party = []  # Add your package names here
+force-single-line = false
+lines-after-imports = 2
+
+[tool.black]
+line-length = 120
+target-version = ["py39"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+strict = true  # Enable all strict checks
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+
+# Per-module options for third-party libraries without stubs
+[[tool.mypy.overrides]]
+module = ["mcp.*", "pydantic.*", "behave.*"]
+ignore_missing_imports = true
+
+[tool.pylint.main]
+# Enable all checks including duplicate code detection
+enable = ["all"]
+# Set minimum lines that constitute a code clone
+min-similarity-lines = 4
+# Ignore imports when checking for similarities
+ignore-imports = true
+# Load all available plugins
+load-plugins = []
+
+[tool.pylint.messages_control]
+# Disable only the most problematic pylint checks that conflict with other tools
+disable = [
+    "C0114",  # missing-module-docstring (covered by pydocstyle)
+    "C0115",  # missing-class-docstring (covered by pydocstyle)
+    "C0116",  # missing-function-docstring (covered by pydocstyle)
+    "R0903",  # too-few-public-methods (too opinionated)
+    "W0212",  # protected-access (sometimes necessary)
+]
+
+[tool.pylint.format]
+max-line-length = 120  # Match Black
+
+[tool.pylint.similarities]
+# Minimum lines that constitute duplicate code
+min-similarity-lines = 4
+# Ignore comments when checking for duplicate code
+ignore-comments = true
+# Ignore docstrings when checking for duplicate code
+ignore-docstrings = true
+# Ignore imports when checking for duplicate code
+ignore-imports = true
+
+[tool.pylint.basic]
+# Naming conventions
+good-names = ["i", "j", "k", "ex", "Run", "_", "id"]
+# Regular expression matching correct constant names
+const-rgx = "^([A-Z_][A-Z0-9_]*|__.*__|log)$"
+
+[tool.pylint.design]
+# Maximum number of arguments for function / method
+max-args = 5
+# Maximum number of locals for function / method body
+max-locals = 15
+# Maximum number of return / yield for function / method body
+max-returns = 6
+# Maximum number of branch for function / method body
+max-branches = 12
+# Maximum number of statements in function / method body
+max-statements = 50
+# Maximum number of parents for a class
+max-parents = 7
+# Maximum number of attributes for a class
+max-attributes = 7
+# Minimum number of public methods for a class
+min-public-methods = 1
+# Maximum number of public methods for a class
+max-public-methods = 20
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report=term-missing --cov-report=html --cov-report=xml"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+# Fail on warnings
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = []  # Add your package name(s) here
+parallel = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+    "*/venv/*",
+    "*/.venv/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+    "@abc.abstractmethod",
+]
+fail_under = 80  # Require 80% coverage

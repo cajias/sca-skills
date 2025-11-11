@@ -43,67 +43,82 @@ Comprehensive linting for Python projects using:
 
 ## Quick Start
 
-### Method 1: Git Submodule (Recommended)
+### Method 1: Pip Package (Recommended)
 
-Add as a submodule to any project:
+Install the configuration package and reference it:
 
 ```bash
-# In your project root
-git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
-git submodule update --init
+# Install the package
+pip install cajias-linter-configs
 
-# Copy the config for your language
-cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
+# Then in your pyproject.toml, extend the config
+```
 
-# Or create a symlink
-ln -s .lint-configs/python/pyproject-linters.toml ./pyproject.toml
+```toml
+[tool.ruff]
+extend = "pyproject-linters.toml"  # Ruff will find it in site-packages
+
+# Or use the Python API to get the path
+```
+
+```python
+from lint_configs import get_python_config_path
+print(get_python_config_path())
 ```
 
 **Benefits:**
-- Keep configs synchronized across projects
-- Easy updates via `git submodule update --remote`
-- Version controlled config changes
-- Single source of truth for the organization
+- Version controlled: `cajias-linter-configs==1.0.0`
+- Easy updates: `pip install --upgrade cajias-linter-configs`
+- No git submodules
+- Works in CI/CD out of the box
+- Professional approach used by major organizations
 
-### Method 2: Direct Copy
+### Method 2: Direct Copy (Simplest)
 
-Copy the configuration files directly:
+Copy the configuration file directly into your project:
 
 ```bash
 # Python
-curl -O https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject-linters.toml
+curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject.toml
 
-# TypeScript (coming soon)
-curl -O https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/typescript/.eslintrc.js
+# Or copy the [tool.*] sections into your existing pyproject.toml
 ```
 
-### Method 3: Template Repository
+**Benefits:**
+- Complete control over configuration
+- No dependencies
+- Easy to customize per-project
 
-Use as a template when creating new projects:
+### Method 3: GitHub Template
 
-```bash
-git clone https://github.com/YOUR_ORG/lint-configs
-cd lint-configs
-cp -r python/. ../my-new-project/
-```
+Use this repository as a GitHub template when creating new projects.
+
+**Benefits:**
+- Start new projects with configs already set up
+- Includes all documentation
 
 ## Structure
 
 ```
 lint-configs/
-├── README.md                  # This file
-├── python/
-│   ├── README.md              # Python-specific usage guide
-│   └── pyproject-linters.toml # Common linter rules for Python
-├── typescript/                # Coming soon
+├── README.md                      # This file
+├── pyproject.toml                 # Package configuration
+├── lint_configs/                  # Pip package
+│   ├── __init__.py                # Package entry point
+│   └── python/
+│       └── pyproject-linters.toml # Config file
+├── python/                        # Source configs
+│   ├── README.md                  # Python-specific usage guide
+│   └── pyproject-linters.toml     # Common linter rules for Python
+├── typescript/                    # Coming soon
 │   ├── README.md
 │   ├── .eslintrc.js
 │   ├── .prettierrc.js
 │   └── tsconfig.json
-├── go/                        # Coming soon
+├── go/                            # Coming soon
 │   ├── README.md
 │   └── .golangci.yml
-└── rust/                      # Coming soon
+└── rust/                          # Coming soon
     ├── README.md
     └── clippy.toml
 ```
@@ -119,16 +134,24 @@ When starting a new project:
 mkdir my-new-project && cd my-new-project
 git init
 
-# 2. Add lint-configs as submodule
-git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
+# 2. Add lint-configs as a dependency
+echo 'cajias-linter-configs' >> requirements-dev.txt
+pip install -r requirements-dev.txt
 
-# 3. Copy relevant config
-cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
+# 3. Extend the config in your pyproject.toml
+cat >> pyproject.toml << 'EOF'
+[tool.ruff]
+line-length = 120  # or keep default from package
+extend = "python/pyproject-linters.toml"  # Will find in site-packages
 
-# 4. Customize for your project
-# Edit pyproject.toml to add your package name
+[tool.ruff.lint.isort]
+known-first-party = ["my_package"]  # Customize for your project
 
-# 5. Commit
+[tool.coverage.run]
+source = ["my_package"]  # Customize for your project
+EOF
+
+# 4. Commit
 git add .
 git commit -m "Add linting configuration"
 ```
@@ -138,11 +161,12 @@ git commit -m "Add linting configuration"
 Gradually adopt the configuration:
 
 ```bash
-# 1. Add as submodule
-git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
+# 1. Install the package
+pip install cajias-linter-configs
 
-# 2. Copy config
-cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
+# 2. Add to your pyproject.toml
+# Add this line to your [tool.ruff] section:
+# extend = "python/pyproject-linters.toml"
 
 # 3. See what needs to be fixed
 ruff check .
@@ -162,20 +186,17 @@ git commit -am "Apply canonical linting configuration"
 Update all projects to the latest config:
 
 ```bash
-# In your project
-cd .lint-configs
-git pull origin main
-cd ..
-
-# Copy updated config
-cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
+# Update the package
+pip install --upgrade cajias-linter-configs
 
 # Test changes
 ruff check .
+mypy .
 
 # Commit if all looks good
-git add pyproject.toml .lint-configs
-git commit -m "Update linting configuration"
+pip freeze > requirements-dev.txt
+git add requirements-dev.txt
+git commit -m "Update linting configuration to v1.1.0"
 ```
 
 ## Configuration Principles
@@ -360,6 +381,70 @@ Use per-file ignores:
 ```
 
 But create tickets to gradually improve legacy code.
+
+## Publishing the Package
+
+To publish updates to PyPI:
+
+### First Time Setup
+
+```bash
+# Install build tools
+pip install build twine
+
+# Create PyPI account at https://pypi.org
+# Create API token at https://pypi.org/manage/account/token/
+```
+
+### Publishing a New Version
+
+```bash
+# 1. Update version number
+# Edit pyproject.toml and lint_configs/__init__.py
+
+# 2. Build the package
+python -m build
+
+# 3. Upload to TestPyPI first (recommended)
+twine upload --repository testpypi dist/*
+
+# 4. Test installation from TestPyPI
+pip install --index-url https://test.pypi.org/simple/ cajias-linter-configs
+
+# 5. If all looks good, upload to PyPI
+twine upload dist/*
+
+# 6. Tag the release
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+### Private PyPI Server
+
+For private organizations, use a private PyPI server:
+
+```bash
+# Option 1: Use your organization's private PyPI
+twine upload --repository-url https://pypi.yourorg.com dist/*
+
+# Option 2: Use GitHub Packages
+# Configure in pyproject.toml and use gh CLI
+
+# Option 3: Use AWS CodeArtifact, JFrog Artifactory, etc.
+```
+
+### Alternative: Install from Git
+
+If you don't want to publish to PyPI, install directly from Git:
+
+```bash
+pip install git+https://github.com/cajias/lint-configs.git@main
+```
+
+In `requirements-dev.txt`:
+```
+cajias-linter-configs @ git+https://github.com/cajias/lint-configs.git@v1.0.0
+```
 
 ## Support
 
