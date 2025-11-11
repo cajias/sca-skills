@@ -43,36 +43,36 @@ Comprehensive linting for Python projects using:
 
 ## Quick Start
 
-### Method 1: Pip Package from GitHub Packages (Recommended)
+### Python Projects (Recommended Method)
 
-Install the configuration package from GitHub Packages:
+Use Ruff's `extend` feature with version-managed configuration:
 
 ```bash
-# Install from GitHub Packages
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
+# 1. Install the package (like any dependency)
+pip install agentic-guardrails
 
-# Or add to requirements-dev.txt:
-# --index-url https://pypi.pkg.github.com/cajias/simple/
-# --extra-index-url https://pypi.org/simple/
-# agentic-guardrails>=1.0.0
+# 2. Get the config path for your pyproject.toml
+python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
+
+# 3. Copy the output to your pyproject.toml
 ```
 
-Then in your `pyproject.toml`:
-
-```toml
-[tool.ruff]
-extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
+**To update all projects:**
+```bash
+pip install --upgrade agentic-guardrails
+# All projects automatically use the new config!
 ```
 
-**Benefits:**
-- No external accounts needed (uses GitHub)
-- Version controlled: `agentic-guardrails==1.0.0`
-- Easy updates: `pip install --upgrade agentic-guardrails`
-- Works with private repositories
-- Free unlimited storage
-- Automatic publishing via GitHub Actions
+**What this gives you:**
+- ✅ Version managed like dependencies (pip install, pip upgrade)
+- ✅ Works in CI/CD automatically with other dependencies
+- ✅ Zero duplication across projects
+- ✅ Pin versions or upgrade as needed
+- ✅ No manual curl commands
 
-### Method 2: Direct Copy (Simplest)
+See the [Python README](./python/README.md) for complete setup instructions.
+
+### Alternative: Direct Copy
 
 Copy the configuration file directly into your project:
 

@@ -4,46 +4,78 @@ Canonical linting configuration for Python projects with minimal ignores and com
 
 ## Quick Start
 
-Choose one of the methods below to use this configuration in your Python project.
+The recommended way to use this configuration across all your projects.
 
-## Method 1: Pip Package (Recommended)
+## Method 1: Extend from Package (Recommended)
 
-Install as a package and extend in your `pyproject.toml`:
+Use Ruff's `extend` feature with the config bundled in the Python package. This approach provides version-managed configuration just like your other dependencies.
+
+### Setup
 
 ```bash
-# Install the configuration package
+# 1. Install (or add to requirements-dev.txt)
 pip install agentic-guardrails
 
-# Or add to requirements-dev.txt
-echo 'agentic-guardrails>=1.0.0' >> requirements-dev.txt
+# 2. Get the config path and add to your pyproject.toml
+python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
 ```
 
-Then in your `pyproject.toml`:
+Copy the output into your `pyproject.toml`, then add your project-specific settings:
 
 ```toml
 [tool.ruff]
-extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
-line-length = 120
+extend = "/path/to/site-packages/lint_configs/ruff.toml"  # Path from command above
+target-version = "py39"  # Your Python version
 
 [tool.ruff.lint.isort]
 known-first-party = ["your_package"]  # Add your package name
+```
 
-[tool.coverage.run]
-source = ["your_package"]  # Add your package name
+### Updating All Projects
+
+When you want to update the configuration:
+
+```bash
+# Just upgrade the package (like any dependency)
+pip install --upgrade agentic-guardrails
+
+# All projects automatically use the new config - no per-project changes needed!
 ```
 
 **Benefits:**
-- Version pinning: `agentic-guardrails==1.0.0`
-- Easy updates: `pip install --upgrade agentic-guardrails`
-- Works in CI/CD automatically
-- No git submodules or manual copying
-- Professional approach
+- ✅ **Version managed**: Use pip to manage versions just like dependencies
+- ✅ **Automatic updates**: `pip install --upgrade` updates all projects
+- ✅ **No version drift**: Lock versions in requirements.txt
+- ✅ **Works in CI/CD**: Installs with your other dependencies
+- ✅ **Zero manual downloads**: Everything through pip
+- ✅ **Rollback support**: Pin to specific versions if needed
 
-**Note:** For MyPy and Pylint, you'll need to copy their configurations to your `pyproject.toml`, or use the Python API:
+**Alternative: Environment Variable Approach**
 
-```python
-from lint_configs import get_python_config_path
-print(get_python_config_path())  # Get full path to config file
+If you prefer a home directory approach (useful for personal projects):
+
+```bash
+# One-time setup: Download to home directory
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+
+# In pyproject.toml:
+[tool.ruff]
+extend = "${HOME}/.ruff.toml"
+target-version = "py39"
+```
+
+To update: `curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"`
+
+**For Other Tools (MyPy, Pylint, Black):**
+
+These tools don't support `extend` from external files, so you'll need to copy their sections into your `pyproject.toml`:
+
+```bash
+# Download the full config (includes all tools)
+curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject-linters.toml
+
+# Copy the [tool.mypy], [tool.pylint.*], [tool.black] sections into your pyproject.toml
+# Then delete pyproject-linters.toml
 ```
 
 ## Method 2: Direct Copy (Simplest)
@@ -63,27 +95,21 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 - Easy to customize per-project
 - All tools (Ruff, MyPy, Pylint) configured in one file
 
-## Method 3: Install from Git
+## Method 3: Using the Python Package (Legacy)
 
-Install the package directly from GitHub:
+If you previously installed the Python package, you can still use it to get the config path:
 
 ```bash
-# Latest version
-pip install git+https://github.com/cajias/lint-configs.git@main
-
-# Specific version
-pip install git+https://github.com/cajias/lint-configs.git@v1.0.0
+pip install agentic-guardrails
 ```
 
-In `requirements-dev.txt`:
-```
-agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0
+```python
+from lint_configs import get_python_config_path
+config_path = get_python_config_path()
+print(config_path)  # Use with --config flag
 ```
 
-**Benefits:**
-- No need to publish to PyPI
-- Can use for private repositories
-- Version control via git tags
+**Note:** This approach requires using `--config` flags with every linting command, which is less convenient than Method 1's `extend` approach.
 
 ## Required Dependencies
 
