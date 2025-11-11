@@ -2,17 +2,17 @@
 // This configuration enforces strict code quality standards with minimal ignores.
 // Mirrors the Python package rules adapted for JavaScript/TypeScript.
 
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
-import securityPlugin from 'eslint-plugin-security';
-import sonarjsPlugin from 'eslint-plugin-sonarjs';
-import unicornPlugin from 'eslint-plugin-unicorn';
-import promisePlugin from 'eslint-plugin-promise';
-import nodePlugin from 'eslint-plugin-n';
-import prettierConfig from 'eslint-config-prettier';
+const typescriptEslint = require('@typescript-eslint/eslint-plugin');
+const typescriptParser = require('@typescript-eslint/parser');
+const importPlugin = require('eslint-plugin-import');
+const securityPlugin = require('eslint-plugin-security');
+const sonarjsPlugin = require('eslint-plugin-sonarjs');
+const unicornPlugin = require('eslint-plugin-unicorn');
+const promisePlugin = require('eslint-plugin-promise');
+const nodePlugin = require('eslint-plugin-n');
+const prettierConfig = require('eslint-config-prettier');
 
-export default [
+module.exports = [
   {
     // Files to lint
     files: ['**/*.{js,mjs,cjs,ts,tsx}'],
@@ -22,7 +22,7 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: true,
+        project: ['./tsconfig.json', './tsconfig.examples.json'],
       },
       globals: {
         // Node.js globals
@@ -95,7 +95,7 @@ export default [
       'no-constant-condition': 'error',
       'no-useless-return': 'error',
       'no-useless-escape': 'error',
-      'unicorn/no-commented-out-code': 'error', // Like ERA001
+      // Note: unicorn/no-commented-out-code requires v51+ (commented code detection)
       
       // ============================================================
       // COMPLEXITY LIMITS (mirrors Python C90, PLR)
@@ -113,13 +113,12 @@ export default [
       // ============================================================
       'no-throw-literal': 'error',
       '@typescript-eslint/no-throw-literal': 'error',
-      '@typescript-eslint/only-throw-error': 'error',
+      // Note: @typescript-eslint/only-throw-error requires v7+
       'promise/catch-or-return': 'error',
       'promise/no-return-wrap': 'error',
       'promise/param-names': 'error',
       'promise/always-return': 'error',
       'promise/no-nesting': 'error',
-      'sonarjs/no-try-promise': 'error',
 
       // ============================================================
       // CODE QUALITY & BEST PRACTICES

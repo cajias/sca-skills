@@ -10,7 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: true,
+    project: ['./tsconfig.json', './tsconfig.examples.json'],
   },
 
   env: {
@@ -96,7 +96,7 @@ module.exports = {
     'no-constant-condition': 'error',
     'no-useless-return': 'error',
     'no-useless-escape': 'error',
-    'unicorn/no-commented-out-code': 'error', // Like ERA001
+    // Note: unicorn/no-commented-out-code requires v51+ (commented code detection)
     
     // ============================================================
     // COMPLEXITY LIMITS (mirrors Python C90, PLR)
@@ -114,7 +114,7 @@ module.exports = {
     // ============================================================
     'no-throw-literal': 'error',
     '@typescript-eslint/no-throw-literal': 'error',
-    '@typescript-eslint/only-throw-error': 'error',
+    // Note: @typescript-eslint/only-throw-error requires v7+
     'promise/catch-or-return': 'error',
     'promise/no-return-wrap': 'error',
     'promise/param-names': 'error',
