@@ -74,7 +74,7 @@ jobs:
             pip config set global.extra-index-url https://pypi.org/simple/
 
             # Install the package
-            pip install cajias-linter-configs==${{ github.ref_name }}
+            pip install agentic-guardrails==${{ github.ref_name }}
             ```
 
             Or install directly from this release:
@@ -91,4 +91,4 @@ jobs:
         run: |
           echo "::notice::✅ Package published to GitHub Packages!"
           echo "::notice::📦 Version: ${GITHUB_REF#refs/tags/}"
-          echo "::notice::Install with: pip install --index-url https://pypi.pkg.github.com/${{ github.repository_owner }}/simple/ cajias-linter-configs==${GITHUB_REF#refs/tags/v}"
+          echo "::notice::Install with: pip install --index-url https://pypi.pkg.github.com/${{ github.repository_owner }}/simple/ agentic-guardrails==${GITHUB_REF#refs/tags/v}"

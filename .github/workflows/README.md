@@ -25,7 +25,7 @@ If you want to also publish to public PyPI:
 
 1. Go to https://pypi.org/manage/account/token/
 2. Create a new API token
-3. Scope: "Entire account" or specific to `cajias-linter-configs`
+3. Scope: "Entire account" or specific to `agentic-guardrails`
 4. Copy the token (starts with `pypi-...`)
 5. Go to your repository on GitHub
 6. Navigate to: **Settings** → **Secrets and variables** → **Actions**
@@ -69,14 +69,14 @@ pip config set global.extra-index-url https://pypi.org/simple/
 
 **Install the package:**
 ```bash
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ cajias-linter-configs
+pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
 ```
 
 **Or in requirements-dev.txt:**
 ```
 --index-url https://pypi.pkg.github.com/cajias/simple/
 --extra-index-url https://pypi.org/simple/
-cajias-linter-configs>=1.0.0
+agentic-guardrails>=1.0.0
 ```
 
 ### Manual Triggering
@@ -147,5 +147,5 @@ git push origin v1.1.0
 
 Users can then install with:
 ```bash
-pip install cajias-linter-configs==1.1.0
+pip install agentic-guardrails==1.1.0
 ```

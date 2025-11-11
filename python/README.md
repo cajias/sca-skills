@@ -12,10 +12,10 @@ Install as a package and extend in your `pyproject.toml`:
 
 ```bash
 # Install the configuration package
-pip install cajias-linter-configs
+pip install agentic-guardrails
 
 # Or add to requirements-dev.txt
-echo 'cajias-linter-configs>=1.0.0' >> requirements-dev.txt
+echo 'agentic-guardrails>=1.0.0' >> requirements-dev.txt
 ```
 
 Then in your `pyproject.toml`:
@@ -33,8 +33,8 @@ source = ["your_package"]  # Add your package name
 ```
 
 **Benefits:**
-- Version pinning: `cajias-linter-configs==1.0.0`
-- Easy updates: `pip install --upgrade cajias-linter-configs`
+- Version pinning: `agentic-guardrails==1.0.0`
+- Easy updates: `pip install --upgrade agentic-guardrails`
 - Works in CI/CD automatically
 - No git submodules or manual copying
 - Professional approach
@@ -77,7 +77,7 @@ pip install git+https://github.com/cajias/lint-configs.git@v1.0.0
 
 In `requirements-dev.txt`:
 ```
-cajias-linter-configs @ git+https://github.com/cajias/lint-configs.git@v1.0.0
+agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0
 ```
 
 **Benefits:**

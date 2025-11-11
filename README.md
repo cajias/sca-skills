@@ -49,12 +49,12 @@ Install the configuration package from GitHub Packages:
 
 ```bash
 # Install from GitHub Packages
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ cajias-linter-configs
+pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
 
 # Or add to requirements-dev.txt:
 # --index-url https://pypi.pkg.github.com/cajias/simple/
 # --extra-index-url https://pypi.org/simple/
-# cajias-linter-configs>=1.0.0
+# agentic-guardrails>=1.0.0
 ```
 
 Then in your `pyproject.toml`:
@@ -66,8 +66,8 @@ extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
 
 **Benefits:**
 - No external accounts needed (uses GitHub)
-- Version controlled: `cajias-linter-configs==1.0.0`
-- Easy updates: `pip install --upgrade cajias-linter-configs`
+- Version controlled: `agentic-guardrails==1.0.0`
+- Easy updates: `pip install --upgrade agentic-guardrails`
 - Works with private repositories
 - Free unlimited storage
 - Automatic publishing via GitHub Actions
@@ -137,7 +137,7 @@ mkdir my-new-project && cd my-new-project
 git init
 
 # 2. Add lint-configs as a dependency
-echo 'cajias-linter-configs' >> requirements-dev.txt
+echo 'agentic-guardrails' >> requirements-dev.txt
 pip install -r requirements-dev.txt
 
 # 3. Extend the config in your pyproject.toml
@@ -164,7 +164,7 @@ Gradually adopt the configuration:
 
 ```bash
 # 1. Install the package
-pip install cajias-linter-configs
+pip install agentic-guardrails
 
 # 2. Add to your pyproject.toml
 # Add this line to your [tool.ruff] section:
@@ -189,7 +189,7 @@ Update all projects to the latest config:
 
 ```bash
 # Update the package
-pip install --upgrade cajias-linter-configs
+pip install --upgrade agentic-guardrails
 
 # Test changes
 ruff check .
@@ -452,7 +452,7 @@ python -m build
 twine upload --repository testpypi dist/*
 
 # 3. Test installation
-pip install --index-url https://test.pypi.org/simple/ cajias-linter-configs
+pip install --index-url https://test.pypi.org/simple/ agentic-guardrails
 
 # 4. If all looks good, upload to PyPI
 twine upload dist/*
@@ -468,7 +468,7 @@ pip install git+https://github.com/cajias/lint-configs.git@main
 
 In `requirements-dev.txt`:
 ```
-cajias-linter-configs @ git+https://github.com/cajias/lint-configs.git@v1.0.0
+agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0
 ```
 
 ## Support
