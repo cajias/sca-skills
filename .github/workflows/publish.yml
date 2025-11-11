@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Required for creating releases
+      packages: write  # Required for publishing to GitHub Packages
       id-token: write  # Required for trusted publishing
 
     steps:
@@ -38,15 +39,15 @@ jobs:
           cd python
           twine check dist/*
 
-      - name: Publish to GitHub Packages
+      - name: Upload to GitHub Release (GitHub Packages alternative)
         if: startsWith(github.ref, 'refs/tags/v')
-        env:
-          TWINE_USERNAME: ${{ github.actor }}
-          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd python
-          twine upload --repository-url https://pypi.pkg.github.com/${{ github.repository_owner }} dist/*
-          echo "✅ Published to GitHub Packages!"
+          echo "✅ Package will be attached to GitHub Release!"
+          echo "📦 Built packages:"
+          ls -lh dist/
+          echo ""
+          echo "Installation instructions will be in the release notes."
 
       - name: Publish to PyPI (Optional)
         # Only publish to PyPI if PYPI_API_TOKEN secret is set
@@ -67,29 +68,57 @@ jobs:
           files: python/dist/*
           generate_release_notes: true
           body: |
-            ## Installation from GitHub Packages
+            ## 📦 Python Lint Configurations Release
+            
+            This release packages the canonical Python linting configurations for easy distribution.
 
+            ## Installation Options
+
+            ### Option 1: Install from Git (Recommended)
             ```bash
-            # Configure pip to use GitHub Packages (one-time setup)
-            pip config set global.index-url https://pypi.pkg.github.com/${{ github.repository_owner }}/simple/
-            pip config set global.extra-index-url https://pypi.org/simple/
-
-            # Install the package
-            pip install agentic-guardrails==${{ github.ref_name }}
-            ```
-
-            Or install directly from this release:
-            ```bash
+            # Install directly from this release tag
             pip install git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
             ```
 
+            ### Option 2: Install from Release Assets
+            ```bash
+            # Download the wheel file from this release and install
+            pip install agentic_guardrails-*.whl
+            ```
+
+            ### Option 3: Add to requirements.txt
+            ```txt
+            # In your requirements-dev.txt
+            agentic-guardrails @ git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
+            ```
+
+            ## Usage
+
+            After installation, extend the configuration in your `pyproject.toml`:
+
+            ```toml
+            [tool.ruff]
+            extend = "python/pyproject-linters.toml"
+            
+            [tool.mypy]
+            # MyPy settings are also included
+            ```
+
+            ## What's Included
+
+            - **Ruff** - 40+ rule categories for comprehensive linting
+            - **MyPy** - Strict type checking configuration
+            - **Black** - Code formatting settings (120 char lines)
+            - **Pylint** - Duplicate code detection
+            - **Coverage** - 80% minimum coverage requirement
+
             ## What's Changed
-            See the commits for details.
+            See the full changelog in the commits below.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Display installation instructions
         run: |
-          echo "::notice::✅ Package published to GitHub Packages!"
+          echo "::notice::✅ Package published to GitHub Release!"
           echo "::notice::📦 Version: ${GITHUB_REF#refs/tags/}"
-          echo "::notice::Install with: pip install --index-url https://pypi.pkg.github.com/${{ github.repository_owner }}/simple/ agentic-guardrails==${GITHUB_REF#refs/tags/v}"
+          echo "::notice::Install with: pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"

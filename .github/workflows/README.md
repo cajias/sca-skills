@@ -2,22 +2,20 @@
 
 ## Publish Workflow
 
-The `publish.yml` workflow automatically builds and publishes the Python package to GitHub Packages when you create a new version tag.
+The `publish.yml` workflow automatically builds and publishes the Python package when you create a new version tag.
 
 ### How It Works
 
 1. **Trigger**: Runs when you push a tag matching `v*` (e.g., `v1.0.0`, `v1.2.3`)
 2. **Build**: Builds the Python package from the `python/` directory
-3. **Publish**:
-   - **Primary**: Uploads to GitHub Packages (uses automatic `GITHUB_TOKEN`)
-   - **Optional**: Also uploads to PyPI (if `PYPI_API_TOKEN` secret is configured)
-4. **Release**: Creates a GitHub release with the built package files
+3. **Release**: Creates a GitHub release with the built package files attached as assets
+4. **Publish** (Optional): Can also publish to PyPI if `PYPI_API_TOKEN` secret is configured
 
 ### Setup Instructions
 
-#### No Setup Required for GitHub Packages!
+#### No Setup Required!
 
-The workflow automatically publishes to GitHub Packages using the built-in `GITHUB_TOKEN`. No secrets needed!
+The workflow automatically creates GitHub Releases using the built-in `GITHUB_TOKEN`. No secrets needed!
 
 #### Optional: Also Publish to PyPI
 
@@ -49,35 +47,33 @@ git push origin v1.0.1
 
 # 4. GitHub Actions will automatically:
 #    - Build the package
-#    - Publish to GitHub Packages
-#    - Create a GitHub Release
+#    - Create a GitHub Release with package files
 #    - (Optional) Publish to PyPI if token is configured
 ```
 
-### Installing from GitHub Packages
+### Installing from GitHub
 
-Users need to configure pip to use GitHub Packages:
+Users can install the package directly from GitHub:
 
-**One-time setup:**
+**Install from a specific version tag:**
 ```bash
-# Authenticate with GitHub (creates ~/.pypirc)
-pip config set global.extra-index-url https://pypi.org/simple/
-
-# For private repos, you'll need a Personal Access Token (PAT)
-# with 'read:packages' scope
+pip install git+https://github.com/cajias/lint-configs.git@v1.0.0#subdirectory=python
 ```
 
-**Install the package:**
+**Install from main branch (latest):**
 ```bash
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
+pip install git+https://github.com/cajias/lint-configs.git@main#subdirectory=python
 ```
 
 **Or in requirements-dev.txt:**
 ```
---index-url https://pypi.pkg.github.com/cajias/simple/
---extra-index-url https://pypi.org/simple/
-agentic-guardrails>=1.0.0
+agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0#subdirectory=python
 ```
+
+**Or download the wheel from a release and install:**
+1. Go to the Releases page
+2. Download the `.whl` file
+3. Run: `pip install agentic_guardrails-*.whl`
 
 ### Manual Triggering
 
@@ -95,10 +91,9 @@ This will build and check the package without publishing (useful for testing).
 
 - ✅ **Automated builds** on version tags
 - ✅ **Package validation** with `twine check`
-- ✅ **PyPI publishing** (optional, requires token)
-- ✅ **TestPyPI support** for testing
-- ✅ **GitHub Releases** with package files attached
+- ✅ **GitHub Releases** with package files (wheel and source) attached
 - ✅ **Installation instructions** in release notes
+- ✅ **PyPI publishing** (optional, requires token)
 - ✅ **Manual triggering** for testing
 
 ### Troubleshooting
@@ -107,9 +102,9 @@ This will build and check the package without publishing (useful for testing).
 - Add `PYPI_API_TOKEN` secret to your repository
 - Make sure the token has correct permissions
 
-**"TestPyPI upload skipped" warning:**
-- This is normal if you only want to publish to PyPI
-- Add `TEST_PYPI_API_TOKEN` if you want to test on TestPyPI first
+**"GitHub Release not created":**
+- Make sure you pushed a tag starting with `v` (e.g., `v1.0.0`)
+- Check that the workflow has `contents: write` permission
 
 **Package build fails:**
 - Check that `python/pyproject.toml` is valid
@@ -141,11 +136,15 @@ git push origin v1.1.0
 
 # GitHub Actions automatically:
 # - Builds package
-# - Publishes to PyPI
-# - Creates GitHub Release
+# - Creates GitHub Release with package files
+# - (Optional) Publishes to PyPI
 ```
 
 Users can then install with:
 ```bash
+# From GitHub
+pip install git+https://github.com/cajias/lint-configs.git@v1.1.0#subdirectory=python
+
+# Or from PyPI (if published there)
 pip install agentic-guardrails==1.1.0
 ```
