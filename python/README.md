@@ -6,50 +6,65 @@ Canonical linting configuration for Python projects with minimal ignores and com
 
 The recommended way to use this configuration across all your projects.
 
-## Method 1: Shared Config with Extend (Recommended)
+## Method 1: Extend from Package (Recommended)
 
-Use Ruff's `extend` feature with a centralized config file. This approach provides automatic updates across all your projects.
+Use Ruff's `extend` feature with the config bundled in the Python package. This approach provides version-managed configuration just like your other dependencies.
 
-### One-Time Setup
+### Setup
 
 ```bash
-# Download the shared Ruff config to your home directory
-curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+# 1. Install (or add to requirements-dev.txt)
+pip install agentic-guardrails
+
+# 2. Get the config path and add to your pyproject.toml
+python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
 ```
 
-### Per-Project Setup
-
-In each project's `pyproject.toml`:
+Copy the output into your `pyproject.toml`, then add your project-specific settings:
 
 ```toml
 [tool.ruff]
-extend = "${HOME}/.ruff.toml"
-target-version = "py39"  # Or your Python version
+extend = "/path/to/site-packages/lint_configs/ruff.toml"  # Path from command above
+target-version = "py39"  # Your Python version
 
 [tool.ruff.lint.isort]
 known-first-party = ["your_package"]  # Add your package name
 ```
 
-That's it! Ruff will automatically use the shared config.
-
 ### Updating All Projects
 
-When you want to update the configuration across all projects:
+When you want to update the configuration:
 
 ```bash
-# Re-download the latest config
-curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+# Just upgrade the package (like any dependency)
+pip install --upgrade agentic-guardrails
 
-# All projects immediately use the new config - no per-project changes needed!
+# All projects automatically use the new config - no per-project changes needed!
 ```
 
 **Benefits:**
-- ✅ **Automatic propagation**: Update once, applies to all projects
-- ✅ **Zero duplication**: Single source of truth in `~/.ruff.toml`
-- ✅ **No version drift**: All projects always use latest config
-- ✅ **Simple setup**: Just one `extend` line in `pyproject.toml`
-- ✅ **Works everywhere**: CI/CD, editors, command line
-- ✅ **No dependencies**: Just Ruff and a config file
+- ✅ **Version managed**: Use pip to manage versions just like dependencies
+- ✅ **Automatic updates**: `pip install --upgrade` updates all projects
+- ✅ **No version drift**: Lock versions in requirements.txt
+- ✅ **Works in CI/CD**: Installs with your other dependencies
+- ✅ **Zero manual downloads**: Everything through pip
+- ✅ **Rollback support**: Pin to specific versions if needed
+
+**Alternative: Environment Variable Approach**
+
+If you prefer a home directory approach (useful for personal projects):
+
+```bash
+# One-time setup: Download to home directory
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+
+# In pyproject.toml:
+[tool.ruff]
+extend = "${HOME}/.ruff.toml"
+target-version = "py39"
+```
+
+To update: `curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"`
 
 **For Other Tools (MyPy, Pylint, Black):**
 

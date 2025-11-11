@@ -45,23 +45,30 @@ Comprehensive linting for Python projects using:
 
 ### Python Projects (Recommended Method)
 
-Use Ruff's `extend` feature for automatic configuration sharing:
+Use Ruff's `extend` feature with version-managed configuration:
 
 ```bash
-# One-time setup: Download shared config
-curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+# 1. Install the package (like any dependency)
+pip install agentic-guardrails
 
-# In each project's pyproject.toml:
-# [tool.ruff]
-# extend = "${HOME}/.ruff.toml"
-# target-version = "py39"
+# 2. Get the config path for your pyproject.toml
+python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
+
+# 3. Copy the output to your pyproject.toml
+```
+
+**To update all projects:**
+```bash
+pip install --upgrade agentic-guardrails
+# All projects automatically use the new config!
 ```
 
 **What this gives you:**
-- ✅ Update once, applies to all projects automatically
+- ✅ Version managed like dependencies (pip install, pip upgrade)
+- ✅ Works in CI/CD automatically with other dependencies
 - ✅ Zero duplication across projects
-- ✅ No version drift or manual syncing
-- ✅ Works everywhere: CI/CD, editors, command line
+- ✅ Pin versions or upgrade as needed
+- ✅ No manual curl commands
 
 See the [Python README](./python/README.md) for complete setup instructions.
 
