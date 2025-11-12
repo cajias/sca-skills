@@ -1,4 +1,4 @@
-name: Publish Python Package
+name: Publish Packages
 
 on:
   push:
@@ -18,38 +18,44 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Python Package Build
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
-      - name: Install build tools
+      - name: Install Python build tools
         run: |
           python -m pip install --upgrade pip
           pip install build twine
 
-      - name: Build package
+      - name: Build Python package
         run: |
           cd python
           python -m build
           ls -la dist/
 
-      - name: Check package
+      - name: Check Python package
         run: |
           cd python
           twine check dist/*
 
-      - name: Upload to GitHub Release (GitHub Packages alternative)
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          cd python
-          echo "✅ Package will be attached to GitHub Release!"
-          echo "📦 Built packages:"
-          ls -lh dist/
-          echo ""
-          echo "Installation instructions will be in the release notes."
+      # TypeScript/JavaScript Package Build
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Publish to PyPI (Optional)
+      - name: Build TypeScript package
+        run: |
+          cd typescript
+          npm ci --ignore-scripts
+          echo "📦 Built TypeScript package"
+          ls -la
+
+      # Publish Python to PyPI
+      - name: Publish Python to PyPI (Optional)
         # Only publish to PyPI if PYPI_API_TOKEN secret is set
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         continue-on-error: true
@@ -59,58 +65,89 @@ jobs:
         run: |
           cd python
           twine upload dist/*
-          echo "✅ Also published to PyPI!"
+          echo "✅ Published Python package to PyPI!"
+
+      # Publish TypeScript to npm
+      - name: Publish TypeScript to npm (Optional)
+        # Only publish to npm if NPM_TOKEN secret is set
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cd typescript
+          npm publish --access public
+          echo "✅ Published TypeScript package to npm!"
+
+      # Publish TypeScript to GitHub Packages
+      - name: Set up Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@agentic-guardrails'
+
+      - name: Publish TypeScript to GitHub Packages
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd typescript
+          npm publish
+          echo "✅ Published TypeScript package to GitHub Packages!"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/v')
         with:
-          files: python/dist/*
+          files: |
+            python/dist/*
+            typescript/package.json
           generate_release_notes: true
           body: |
-            ## 📦 Python Lint Configurations Release
+            ## 📦 Lint Configurations Release
             
-            This release packages the canonical Python linting configurations for easy distribution.
+            This release packages canonical linting configurations for multiple languages.
 
-            ## Installation Options
+            ## Installation
 
-            ### Option 1: Install from Git (Recommended)
+            ### Python
             ```bash
-            # Install directly from this release tag
+            # Install from PyPI (if published)
+            pip install agentic-guardrails
+
+            # Or install from Git
             pip install git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
             ```
 
-            ### Option 2: Install from Release Assets
+            See [Python README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/python) for usage.
+
+            ### TypeScript/JavaScript
             ```bash
-            # Download the wheel file from this release and install
-            pip install agentic_guardrails-*.whl
+            # Install from npm (if published)
+            npm install @agentic-guardrails/eslint-config
+
+            # Or install from GitHub Packages
+            npm install @agentic-guardrails/eslint-config@${{ github.ref_name }}
             ```
 
-            ### Option 3: Add to requirements.txt
-            ```txt
-            # In your requirements-dev.txt
-            agentic-guardrails @ git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
-            ```
-
-            ## Usage
-
-            After installation, extend the configuration in your `pyproject.toml`:
-
-            ```toml
-            [tool.ruff]
-            extend = "python/pyproject-linters.toml"
-            
-            [tool.mypy]
-            # MyPy settings are also included
-            ```
+            See [TypeScript README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/typescript) for usage.
 
             ## What's Included
 
-            - **Ruff** - 40+ rule categories for comprehensive linting
-            - **MyPy** - Strict type checking configuration
-            - **Black** - Code formatting settings (120 char lines)
-            - **Pylint** - Duplicate code detection
-            - **Coverage** - 80% minimum coverage requirement
+            **Python Package:**
+            - Ruff (40+ rule categories)
+            - MyPy (strict type checking)
+            - Black (code formatting)
+            - Pylint (duplicate code detection)
+            - Coverage (80% minimum)
+
+            **TypeScript/JavaScript Package:**
+            - ESLint (200+ rules from multiple plugins)
+            - TypeScript strict mode
+            - Prettier (code formatting)
+            - Security, complexity, and dead code detection
 
             ## What's Changed
             See the full changelog in the commits below.
@@ -119,6 +156,7 @@ jobs:
 
       - name: Display installation instructions
         run: |
-          echo "::notice::✅ Package published to GitHub Release!"
+          echo "::notice::✅ Packages published to GitHub Release!"
           echo "::notice::📦 Version: ${GITHUB_REF#refs/tags/}"
-          echo "::notice::Install with: pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"
+          echo "::notice::Python: pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"
+          echo "::notice::TypeScript: npm install @agentic-guardrails/eslint-config@${GITHUB_REF#refs/tags/}"

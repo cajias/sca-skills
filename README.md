@@ -61,58 +61,20 @@ Comprehensive linting for JavaScript/TypeScript projects using:
 
 ## Quick Start
 
-### Python Projects (Recommended Method)
+Each language has its own setup method. See the language-specific README for detailed instructions:
 
-Use Ruff's `extend` feature with version-managed configuration:
+- **[Python Setup →](./python/README.md)** - Install via pip, extend configurations in pyproject.toml
+- **[TypeScript/JavaScript Setup →](./typescript/README.md)** - Install via npm, extend ESLint configs
 
-```bash
-# 1. Install the package (like any dependency)
-pip install agentic-guardrails
+### Common Installation Methods
 
-# 2. Get the config path for your pyproject.toml
-python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
+All language configurations support similar installation patterns:
 
-# 3. Copy the output to your pyproject.toml
-```
+1. **Package Manager** - Install as a dependency (recommended)
+2. **Direct Copy** - Copy configuration files into your project
+3. **GitHub Template** - Use this repository as a template for new projects
 
-**To update all projects:**
-```bash
-pip install --upgrade agentic-guardrails
-# All projects automatically use the new config!
-```
-
-**What this gives you:**
-- ✅ Version managed like dependencies (pip install, pip upgrade)
-- ✅ Works in CI/CD automatically with other dependencies
-- ✅ Zero duplication across projects
-- ✅ Pin versions or upgrade as needed
-- ✅ No manual curl commands
-
-See the [Python README](./python/README.md) for complete setup instructions.
-
-### Alternative: Direct Copy
-
-Copy the configuration file directly into your project:
-
-```bash
-# Python
-curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject.toml
-
-# Or copy the [tool.*] sections into your existing pyproject.toml
-```
-
-**Benefits:**
-- Complete control over configuration
-- No dependencies
-- Easy to customize per-project
-
-### Method 3: GitHub Template
-
-Use this repository as a GitHub template when creating new projects.
-
-**Benefits:**
-- Start new projects with configs already set up
-- Includes all documentation
+See language-specific READMEs for complete setup instructions and examples.
 
 ## Structure
 
@@ -145,81 +107,12 @@ agentic-guardrails/
     └── clippy.toml
 ```
 
-## Usage Examples
+## Usage
 
-### For New Projects
+For detailed usage instructions, including examples for new projects, existing projects, and keeping configurations up to date, see the language-specific READMEs:
 
-When starting a new project:
-
-```bash
-# 1. Create your project
-mkdir my-new-project && cd my-new-project
-git init
-
-# 2. Add lint-configs as a dependency
-echo 'agentic-guardrails' >> requirements-dev.txt
-pip install -r requirements-dev.txt
-
-# 3. Extend the config in your pyproject.toml
-cat >> pyproject.toml << 'EOF'
-[tool.ruff]
-line-length = 120  # or keep default from package
-extend = "python/pyproject-linters.toml"  # Will find in site-packages
-
-[tool.ruff.lint.isort]
-known-first-party = ["my_package"]  # Customize for your project
-
-[tool.coverage.run]
-source = ["my_package"]  # Customize for your project
-EOF
-
-# 4. Commit
-git add .
-git commit -m "Add linting configuration"
-```
-
-### For Existing Projects
-
-Gradually adopt the configuration:
-
-```bash
-# 1. Install the package
-pip install agentic-guardrails
-
-# 2. Add to your pyproject.toml
-# Add this line to your [tool.ruff] section:
-# extend = "python/pyproject-linters.toml"
-
-# 3. See what needs to be fixed
-ruff check .
-mypy .
-
-# 4. Fix incrementally
-ruff check . --fix              # Auto-fix what's possible
-ruff check . --select=I --fix   # Fix imports
-# ... continue with other categories
-
-# 5. Commit when ready
-git commit -am "Apply canonical linting configuration"
-```
-
-### Keeping Configs Up to Date
-
-Update all projects to the latest config:
-
-```bash
-# Update the package
-pip install --upgrade agentic-guardrails
-
-# Test changes
-ruff check .
-mypy .
-
-# Commit if all looks good
-pip freeze > requirements-dev.txt
-git add requirements-dev.txt
-git commit -m "Update linting configuration to v1.1.0"
-```
+- **[Python Usage →](./python/README.md)** - pip install, ruff/mypy commands, CI/CD integration
+- **[TypeScript/JavaScript Usage →](./typescript/README.md)** - npm install, eslint commands, IDE setup
 
 ## Configuration Principles
 
@@ -395,27 +288,18 @@ But document why and consider if it should be in the canonical config.
 
 ### How do I handle legacy code?
 
-Use per-file ignores:
+Use per-file ignores to gradually adopt strict rules. Each language configuration supports this pattern. See the language-specific READMEs for examples and syntax.
 
-```toml
-[tool.ruff.lint.per-file-ignores]
-"legacy/**/*.py" = ["ANN", "D"]  # Relax for legacy code
-```
+Create tickets to gradually improve legacy code over time.
 
-But create tickets to gradually improve legacy code.
+## Publishing Packages
 
-## Publishing the Package
+### Automated Publishing with GitHub Actions
 
-### Automated Publishing with GitHub Actions (Recommended)
-
-The repository includes a GitHub Actions workflow that automatically publishes to GitHub Packages.
-
-**Quick start (no setup required!):**
+The repository includes a GitHub Actions workflow that automatically publishes packages when a new release tag is created:
 
 ```bash
-# 1. Update version number
-# Edit python/pyproject.toml and python/lint_configs/__init__.py
-
+# 1. Update version numbers in language-specific files
 # 2. Commit and tag
 git add .
 git commit -m "Bump version to 1.0.1"
@@ -423,73 +307,16 @@ git tag v1.0.1
 git push origin v1.0.1
 
 # 3. GitHub Actions automatically:
-#    ✅ Builds the package
-#    ✅ Publishes to GitHub Packages
+#    ✅ Builds all packages
+#    ✅ Publishes to package registries
 #    ✅ Creates a GitHub Release
-#    ✅ (Optional) Also publishes to PyPI if token is set
 ```
 
-**No setup required!** GitHub Packages uses the automatic `GITHUB_TOKEN`.
+**Supported registries:**
+- Python: PyPI and GitHub Packages
+- TypeScript/JavaScript: npm and GitHub Packages
 
-**Optional: Also publish to PyPI:**
-
-1. Create a PyPI API token at https://pypi.org/manage/account/token/
-2. Add it to GitHub repository secrets as `PYPI_API_TOKEN`
-3. See [.github/workflows/README.md](.github/workflows/README.md) for details
-
-### Manual Publishing
-
-#### To GitHub Packages:
-
-```bash
-cd python/
-
-# 1. Update version
-# Edit pyproject.toml and lint_configs/__init__.py
-
-# 2. Build the package
-python -m build
-
-# 3. Publish to GitHub Packages
-export GITHUB_TOKEN=your_personal_access_token
-twine upload --repository-url https://pypi.pkg.github.com/cajias dist/*
-
-# 4. Tag the release (from repo root)
-cd ..
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-#### To PyPI (public):
-
-```bash
-cd python/
-
-# 1. Build
-python -m build
-
-# 2. Upload to TestPyPI first (recommended)
-twine upload --repository testpypi dist/*
-
-# 3. Test installation
-pip install --index-url https://test.pypi.org/simple/ agentic-guardrails
-
-# 4. If all looks good, upload to PyPI
-twine upload dist/*
-```
-
-### Alternative: Install from Git
-
-If you don't want to publish to PyPI, install directly from Git:
-
-```bash
-pip install git+https://github.com/cajias/lint-configs.git@main
-```
-
-In `requirements-dev.txt`:
-```
-agentic-guardrails @ git+https://github.com/cajias/lint-configs.git@v1.0.0
-```
+See [.github/workflows/README.md](.github/workflows/README.md) for configuration details.
 
 ## Support
 
