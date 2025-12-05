@@ -4,7 +4,7 @@
 #
 # Recommended Setup (version-managed via pip):
 # 1. Install the package:
-#    pip install agentic-guardrails
+#    pip install sca-skills
 #
 # 2. Get the config path:
 #    python -c "from lint_configs import get_ruff_config_path; print(get_ruff_config_path())"
@@ -17,10 +17,10 @@
 #    [tool.ruff.lint.isort]
 #    known-first-party = ["your_package"]  # Add your package name
 #
-# To update: pip install --upgrade agentic-guardrails
+# To update: pip install --upgrade sca-skills
 #
 # Alternative Setup (home directory):
-# 1. curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+# 1. curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/sca-skills/main/python/ruff.toml"
 # 2. In pyproject.toml: extend = "${HOME}/.ruff.toml"
 # 3. To update: Re-run the curl command
 

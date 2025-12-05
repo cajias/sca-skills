@@ -1,12 +1,12 @@
 {
-  "name": "@cajias/guardrails-mcp",
+  "name": "@cajias/sca-mcp",
   "version": "1.0.0",
-  "description": "MCP server for running linters with structured output",
+  "description": "MCP server for static code analysis",
   "type": "module",
   "main": "dist/server.js",
   "bin": {
-    "guardrails-mcp": "dist/server.js",
-    "guardrails-install-skill": "scripts/install-skill.sh"
+    "sca-mcp": "dist/server.js",
+    "sca-install-skill": "scripts/install-skill.sh"
   },
   "scripts": {
     "build": "tsc",
@@ -28,13 +28,14 @@
     "readme",
     "documentation",
     "claude-code",
-    "agentic-guardrails"
+    "sca-skills",
+    "static-code-analysis"
   ],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cajias/agentic-guardrails.git",
+    "url": "https://github.com/cajias/sca-skills.git",
     "directory": "mcp-server"
   },
   "dependencies": {

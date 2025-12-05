@@ -1,15 +1,15 @@
 # Copilot Coding Agent Instructions
 
-This file provides context and guidelines for GitHub Copilot coding agent when working on the `agentic-guardrails` repository.
+This file provides context and guidelines for GitHub Copilot coding agent when working on the `sca-skills` repository.
 
 ## Project Overview
 
-**agentic-guardrails** (formerly `lint-configs`) is a collection of strict, opinionated linter configurations for multiple programming languages. The project's philosophy is: **"If it's worth enabling, it's worth enforcing everywhere."**
+**sca-skills** (formerly `sca-skills`) is a collection of strict, opinionated linter configurations for multiple programming languages. The project's philosophy is: **"If it's worth enabling, it's worth enforcing everywhere."**
 
 ### Repository Structure
 
 ```
-agentic-guardrails/
+sca-skills/
 ├── .github/                    # GitHub configuration
 │   ├── workflows/              # CI/CD workflows
 │   └── copilot-instructions.md # This file
@@ -70,8 +70,8 @@ This project enforces the same strict linting rules it provides to others:
 
 ```bash
 # Clone repository
-git clone https://github.com/cajias/agentic-guardrails.git
-cd agentic-guardrails
+git clone https://github.com/cajias/sca-skills.git
+cd sca-skills
 
 # Set up Python environment (for Python package development)
 cd python
@@ -120,6 +120,7 @@ Version numbers follow semantic versioning (MAJOR.MINOR.PATCH):
 - **PATCH**: Bug fixes, documentation updates
 
 Update versions in:
+
 1. `python/pyproject.toml` → `[project].version`
 2. `python/lint_configs/__init__.py` → `__version__`
 
@@ -186,6 +187,7 @@ twine upload dist/*
 ### Be Conservative
 
 Configuration changes affect many projects. Only change if:
+
 - Rule produces false positives consistently
 - Rule conflicts with other tools (formatters)
 - Rule is fundamentally broken
@@ -206,6 +208,7 @@ Configuration changes affect many projects. Only change if:
 ### Minimize Ignores
 
 Only ignore rules for valid reasons:
+
 1. Conflicts with code formatters
 2. False positives that can't be fixed
 3. Per-file exceptions (tests, generated code)
@@ -258,6 +261,7 @@ This project uses GitHub Actions workflows in `.github/workflows/`:
 2. Add linting/testing workflows as the project grows
 
 When modifying workflows:
+
 - Test locally with `act` when possible
 - Use established GitHub Actions from marketplace
 - Document any secrets or variables needed

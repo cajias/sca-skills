@@ -1,4 +1,4 @@
-# Agentic Guardrails
+# SCA Guardrails
 
 AI-powered code quality workflow that automatically fixes lint errors until the codebase is clean.
 
@@ -8,20 +8,20 @@ This skill activates when the user asks to:
 
 - "Fix lint errors"
 - "Clean up code quality"
-- "Run guardrails"
+- "Run static analysis"
 - "Make the code pass linting"
 - "Fix all the warnings and errors"
 
 ## Required MCP Server
 
-This skill requires the `guardrails` MCP server to be configured:
+This skill requires the `sca` MCP server to be configured:
 
 ```json
 {
   "mcpServers": {
-    "guardrails": {
+    "sca": {
       "command": "npx",
-      "args": ["@cajias/guardrails-mcp"]
+      "args": ["@cajias/sca-mcp"]
     }
   }
 }
@@ -31,7 +31,7 @@ This skill requires the `guardrails` MCP server to be configured:
 
 ### Phase 1: Assessment
 
-1. Call `guardrails.lint({ path: "." })`
+1. Call `sca.lint({ path: "." })`
 2. Categorize issues:
    - **Auto-fixable**: ESLint --fix, Prettier --write can handle
    - **Claude-fixable**: Complexity, types, dead code - Claude can refactor
@@ -39,7 +39,7 @@ This skill requires the `guardrails` MCP server to be configured:
 
 ### Phase 2: Auto-Fix
 
-1. Call `guardrails.fix({ path: "." })`
+1. Call `sca.fix({ path: "." })`
 2. Re-lint to see remaining issues
 
 ### Phase 3: Claude Fixes
@@ -74,7 +74,7 @@ When running in an interactive Claude Code session:
 
 ### Headless Mode
 
-When invoked as `claude --skill guardrails`:
+When invoked as `claude --skill sca-guardrails`:
 
 - Run the full workflow autonomously
 - Exit 0 if codebase is clean

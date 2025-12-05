@@ -85,7 +85,7 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@agentic-guardrails'
+          scope: '@sca-skills'
 
       - name: Publish TypeScript to GitHub Packages
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
@@ -115,7 +115,7 @@ jobs:
             ### Python
             ```bash
             # Install from PyPI (if published)
-            pip install agentic-guardrails
+            pip install sca-skills
 
             # Or install from Git
             pip install git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
@@ -126,10 +126,10 @@ jobs:
             ### TypeScript/JavaScript
             ```bash
             # Install from npm (if published)
-            npm install @agentic-guardrails/eslint-config
+            npm install @sca-skills/eslint-config
 
             # Or install from GitHub Packages
-            npm install @agentic-guardrails/eslint-config@${{ github.ref_name }}
+            npm install @sca-skills/eslint-config@${{ github.ref_name }}
             ```
 
             See [TypeScript README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/typescript) for usage.
@@ -159,4 +159,4 @@ jobs:
           echo "::notice::✅ Packages published to GitHub Release!"
           echo "::notice::📦 Version: ${GITHUB_REF#refs/tags/}"
           echo "::notice::Python: pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"
-          echo "::notice::TypeScript: npm install @agentic-guardrails/eslint-config@${GITHUB_REF#refs/tags/}"
+          echo "::notice::TypeScript: npm install @sca-skills/eslint-config@${GITHUB_REF#refs/tags/}"

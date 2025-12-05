@@ -1,22 +1,20 @@
-# Agentic Guardrails
+# sca-skills
 
-Strict, opinionated linter configs for Python and TypeScript.
+Claude Code skills for static code analysis.
 
 ## Highlights
 
-- **Minimal ignores** - Only rules that conflict with formatters
-- **Maximum strictness** - All quality checks enabled
-- **Easy adoption** - One-liner install
+- **Strict configs** - ESLint, Ruff, MyPy with maximum strictness
+- **MCP server** - Lint/fix tools for Claude Code
+- **Claude skills** - README writer, README evaluator, guardrails workflow
 
 ## Usage
 
 ```bash
 # TypeScript/JavaScript
-npm install @agentic-guardrails/eslint-config
-npx eslint . --config node_modules/@agentic-guardrails/eslint-config/eslint.config.js
+npx eslint . --config eslint.config.js
 
 # Python
-pip install agentic-guardrails
 ruff check .
 mypy .
 ```
@@ -25,28 +23,20 @@ mypy .
 
 ### TypeScript/JavaScript
 
+Copy `typescript/eslint.config.js` to your project root, then install dependencies:
+
 ```bash
-npm install @agentic-guardrails/eslint-config
-```
-
-Create `eslint.config.js`:
-
-```javascript
-import config from '@agentic-guardrails/eslint-config';
-export default config;
+npm install -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser \
+  eslint-plugin-sonarjs eslint-plugin-security eslint-plugin-no-only-tests \
+  prettier eslint-config-prettier
 ```
 
 ### Python
 
+Copy `python/pyproject.toml` linter sections to your project, then install:
+
 ```bash
-pip install agentic-guardrails
-```
-
-Extend in `pyproject.toml`:
-
-```toml
-[tool.ruff]
-extend = "pyproject-linters.toml"
+pip install ruff mypy black pylint
 ```
 
 ## What's Included
@@ -72,8 +62,13 @@ See [Python README](./python/README.md) and [TypeScript README](./typescript/REA
 An MCP server is included for Claude Code integration:
 
 ```bash
-npm install -g @cajias/guardrails-mcp
-claude mcp add guardrails -- npx @cajias/guardrails-mcp
+# Clone the repo
+git clone https://github.com/cajias/sca-skills.git
+cd sca-skills/mcp-server
+npm install && npm run build
+
+# Add to Claude Code
+claude mcp add sca -- node /path/to/sca-skills/mcp-server/dist/server.js
 ```
 
 Provides `lint` and `fix` tools for automated code quality workflows.
@@ -89,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -e ".[dev]"
+      - run: pip install ruff mypy
       - run: ruff check . && mypy .
 ```
 

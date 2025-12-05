@@ -8,7 +8,7 @@ import { lint, LintInput } from './tools/lint.js';
 
 const server = new Server(
   {
-    name: 'guardrails-mcp',
+    name: 'sca-mcp',
     version: '1.0.0',
   },
   {
@@ -119,7 +119,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main(): Promise<void> {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('Guardrails MCP server started');
+  console.error('SCA MCP server started');
 }
 
 main().catch((error) => {

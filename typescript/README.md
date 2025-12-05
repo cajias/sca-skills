@@ -7,6 +7,7 @@ Canonical ESLint configuration for JavaScript/TypeScript projects with minimal i
 **If it's worth enabling, it's worth enforcing everywhere.**
 
 This configuration enforces strict code quality standards to keep AI-generated code in check:
+
 - **Minimal ignores** - Only rules that conflict with Prettier are disabled
 - **Maximum strictness** - All quality checks enabled
 - **Consistent with Python package** - Similar principles across languages
@@ -15,12 +16,14 @@ This configuration enforces strict code quality standards to keep AI-generated c
 ## Features
 
 ### 🔒 Security (mirrors Python Bandit)
+
 - Detects unsafe regex patterns
 - Prevents eval usage
 - Identifies timing attack vulnerabilities
 - Flags insecure random number generation
 
 ### 🎯 Type Safety (mirrors Python mypy)
+
 - TypeScript strict mode enabled
 - Explicit return types required
 - No implicit any
@@ -28,6 +31,7 @@ This configuration enforces strict code quality standards to keep AI-generated c
 - Proper async/promise typing
 
 ### 🧹 Dead Code Detection (mirrors Python F401, F841, ERA, ARG)
+
 - Unused variables and imports
 - Unused function arguments
 - Unreachable code
@@ -35,6 +39,7 @@ This configuration enforces strict code quality standards to keep AI-generated c
 - Useless return statements
 
 ### 📊 Complexity Limits (mirrors Python C90, PLR)
+
 - Max cyclomatic complexity: 10
 - Max function parameters: 5
 - Max statements per function: 50
@@ -42,6 +47,7 @@ This configuration enforces strict code quality standards to keep AI-generated c
 - Cognitive complexity limits
 
 ### ⚠️ Error Handling (mirrors Python TRY)
+
 - Proper promise handling
 - No floating promises
 - Catch or return promises
@@ -49,6 +55,7 @@ This configuration enforces strict code quality standards to keep AI-generated c
 - Type-safe error throwing
 
 ### 🎨 Code Quality
+
 - Import organization (like isort)
 - Naming conventions (camelCase, PascalCase)
 - Modern JavaScript/TypeScript patterns
@@ -60,7 +67,7 @@ This configuration enforces strict code quality standards to keep AI-generated c
 ### Installation
 
 ```bash
-npm install --save-dev @agentic-guardrails/eslint-config eslint typescript
+npm install --save-dev @sca-skills/eslint-config eslint typescript
 ```
 
 ### Setup
@@ -70,7 +77,7 @@ npm install --save-dev @agentic-guardrails/eslint-config eslint typescript
 Create `eslint.config.js`:
 
 ```javascript
-import agenticConfig from '@agentic-guardrails/eslint-config/flat';
+import agenticConfig from '@sca-skills/eslint-config/flat';
 
 export default [
   ...agenticConfig,
@@ -91,7 +98,7 @@ Create `.eslintrc.js`:
 
 ```javascript
 module.exports = {
-  extends: ['@agentic-guardrails/eslint-config'],
+  extends: ['@sca-skills/eslint-config'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -103,7 +110,7 @@ Or use `.eslintrc.json`:
 
 ```json
 {
-  "extends": ["@agentic-guardrails/eslint-config"],
+  "extends": ["@sca-skills/eslint-config"],
   "parserOptions": {
     "project": "./tsconfig.json"
   }
@@ -116,7 +123,7 @@ Use the included strict TypeScript config. Create or extend `tsconfig.json`:
 
 ```json
 {
-  "extends": "@agentic-guardrails/eslint-config/tsconfig.json",
+  "extends": "@sca-skills/eslint-config/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src"
@@ -130,13 +137,13 @@ Use the included strict TypeScript config. Create or extend `tsconfig.json`:
 Copy the Prettier config to your project:
 
 ```bash
-cp node_modules/@agentic-guardrails/eslint-config/.prettierrc.js .prettierrc.js
+cp node_modules/@sca-skills/eslint-config/.prettierrc.js .prettierrc.js
 ```
 
 Or create `.prettierrc.js`:
 
 ```javascript
-module.exports = require('@agentic-guardrails/eslint-config/.prettierrc.js');
+module.exports = require('@sca-skills/eslint-config/.prettierrc.js');
 ```
 
 ## Required Dependencies
@@ -228,6 +235,7 @@ jobs:
 This configuration provides:
 
 ### ESLint Rules
+
 - **200+ rules enabled** across multiple plugin categories
 - **Only Prettier conflicts ignored**
 - **Per-file ignores** for test files and config files
@@ -237,6 +245,7 @@ This configuration provides:
 - **Duplicate code detection** to prevent copy-paste programming
 
 ### TypeScript Settings
+
 - **Strict mode** enabled with all checks
 - No implicit any types
 - Strict null checks
@@ -244,6 +253,7 @@ This configuration provides:
 - Unreachable code detection
 
 ### Prettier Settings
+
 - **120 character line length** (matches Python Black)
 - Single quotes for strings
 - Trailing commas
@@ -253,7 +263,9 @@ This configuration provides:
 ## What This Configuration Enforces
 
 ### 1. Type Safety Everywhere
+
 All functions must have explicit return types:
+
 ```typescript
 // ❌ Bad
 function calculate(a: number, b: number) {
@@ -267,6 +279,7 @@ function calculate(a: number, b: number): number {
 ```
 
 ### 2. No Dead Code
+
 ```typescript
 // ❌ Bad - unused variable
 const unused = 42;
@@ -280,6 +293,7 @@ console.log(used);
 ```
 
 ### 3. Proper Error Handling
+
 ```typescript
 // ❌ Bad - floating promise
 someAsyncFunction();
@@ -288,10 +302,11 @@ someAsyncFunction();
 await someAsyncFunction();
 
 // ✅ Also good
-someAsyncFunction().catch(error => console.error(error));
+someAsyncFunction().catch((error) => console.error(error));
 ```
 
 ### 4. Complexity Limits
+
 ```typescript
 // ❌ Bad - too complex
 function complexFunction(a, b, c, d, e, f) {
@@ -315,6 +330,7 @@ function simpleFunction(config: Config): Result {
 ```
 
 ### 5. Modern JavaScript/TypeScript
+
 ```typescript
 // ❌ Bad
 var x = 1;
@@ -332,6 +348,7 @@ for (const item of arr) {
 ```
 
 ### 6. Security Best Practices
+
 ```typescript
 // ❌ Bad - potential security issue
 const userInput = getUserInput();
@@ -349,8 +366,9 @@ const result = JSON.parse(userInput);
 You can add project-specific rules in your config:
 
 **Flat config:**
+
 ```javascript
-import agenticConfig from '@agentic-guardrails/eslint-config/flat';
+import agenticConfig from '@sca-skills/eslint-config/flat';
 
 export default [
   ...agenticConfig,
@@ -364,9 +382,10 @@ export default [
 ```
 
 **Legacy config:**
+
 ```javascript
 module.exports = {
-  extends: ['@agentic-guardrails/eslint-config'],
+  extends: ['@sca-skills/eslint-config'],
   rules: {
     // Relax specific rules if needed
     'max-lines-per-function': ['error', { max: 100 }],
@@ -385,7 +404,7 @@ export default [
   {
     files: ['src/legacy/**/*.ts'],
     rules: {
-      'complexity': 'off',
+      complexity: 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
@@ -408,12 +427,14 @@ function legacyFunction(data: any): void {
 If applying this to an existing project:
 
 ### Step 1: Format First
+
 ```bash
 npx prettier --write .
 git commit -am "Apply Prettier formatting"
 ```
 
 ### Step 2: Auto-Fix What's Possible
+
 ```bash
 npx eslint . --fix
 git commit -am "Auto-fix ESLint issues"
@@ -430,6 +451,7 @@ Run `npx eslint .` to see remaining issues. Fix incrementally:
 5. **Fix async patterns** - Await promises properly
 
 ### Step 4: Type Check
+
 ```bash
 npx tsc --noEmit
 ```
@@ -441,6 +463,7 @@ Fix type errors file by file.
 ### VS Code
 
 Install extensions:
+
 - ESLint (dbaeumer.vscode-eslint)
 - Prettier (esbenp.prettier-vscode)
 
@@ -454,12 +477,7 @@ Add to `.vscode/settings.json`:
     "source.fixAll.eslint": true,
     "source.organizeImports": true
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ]
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }
 ```
 
@@ -475,11 +493,13 @@ Add to `.vscode/settings.json`:
 ### "Too many errors"
 
 Start by fixing auto-fixable issues:
+
 ```bash
 npx eslint . --fix
 ```
 
 Then address categories one at a time:
+
 ```bash
 # Check specific rule
 npx eslint . --rule '@typescript-eslint/explicit-function-return-type: error'
@@ -516,40 +536,47 @@ That's the point! These rules catch real issues. But if you must:
 ## Rule Categories
 
 ### Security Rules (Plugin: eslint-plugin-security)
+
 Detects common security vulnerabilities
 
 ### TypeScript Rules (Plugin: @typescript-eslint)
+
 Enforces type safety and best practices
 
 ### Import Rules (Plugin: eslint-plugin-import)
+
 Organizes imports and prevents cycles
 
 ### Promise Rules (Plugin: eslint-plugin-promise)
+
 Ensures proper async/promise handling
 
 ### SonarJS Rules (Plugin: eslint-plugin-sonarjs)
+
 Detects bugs and code smells, including duplicate code
 
 ### Unicorn Rules (Plugin: eslint-plugin-unicorn)
+
 Modern JavaScript best practices
 
 ### Node.js Rules (Plugin: eslint-plugin-n)
+
 Node.js-specific best practices
 
 ## Comparison with Python Package
 
-| Python (Ruff/MyPy) | JavaScript/TypeScript (ESLint) |
-|-------------------|-------------------------------|
-| Bandit (S) - Security | eslint-plugin-security |
+| Python (Ruff/MyPy)          | JavaScript/TypeScript (ESLint)         |
+| --------------------------- | -------------------------------------- |
+| Bandit (S) - Security       | eslint-plugin-security                 |
 | MyPy strict - Type checking | TypeScript strict + @typescript-eslint |
-| F401, F841 - Dead code | no-unused-vars, unicorn rules |
-| ERA - Commented code | unicorn/no-commented-out-code |
-| C90 - Complexity | complexity, sonarjs rules |
-| PLR - Refactoring | sonarjs/no-identical-functions |
-| TRY - Error handling | promise plugin rules |
-| I - Import sorting | eslint-plugin-import |
-| ANN - Type hints | @typescript-eslint explicit rules |
-| UP - Modern syntax | unicorn modern patterns |
+| F401, F841 - Dead code      | no-unused-vars, unicorn rules          |
+| ERA - Commented code        | unicorn/no-commented-out-code          |
+| C90 - Complexity            | complexity, sonarjs rules              |
+| PLR - Refactoring           | sonarjs/no-identical-functions         |
+| TRY - Error handling        | promise plugin rules                   |
+| I - Import sorting          | eslint-plugin-import                   |
+| ANN - Type hints            | @typescript-eslint explicit rules      |
+| UP - Modern syntax          | unicorn modern patterns                |
 
 ## Contributing
 
@@ -566,7 +593,7 @@ Found an issue or want to suggest an improvement? Open an issue!
 
 ## Support
 
-- **Issues:** https://github.com/cajias/agentic-guardrails/issues
+- **Issues:** https://github.com/cajias/sca-skills/issues
 - **Discussions:** Use GitHub Discussions for questions
 - **Updates:** Check the repository for new versions
 

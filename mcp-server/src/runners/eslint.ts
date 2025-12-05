@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 // Path to our bundled eslint config
 const ESLINT_CONFIG_PATH = resolve(
   __dirname,
-  '../../node_modules/@agentic-guardrails/eslint-config/eslint.config.js'
+  '../../node_modules/@sca-skills/eslint-config/eslint.config.js'
 );
 
 export interface EslintMessage {

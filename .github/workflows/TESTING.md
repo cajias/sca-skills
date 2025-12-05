@@ -26,7 +26,8 @@ ls -lh dist/
 ```
 
 Expected output:
-- Two files: `agentic_guardrails-X.Y.Z-py3-none-any.whl` and `agentic_guardrails-X.Y.Z.tar.gz`
+
+- Two files: `sca_skills-X.Y.Z-py3-none-any.whl` and `sca_skills-X.Y.Z.tar.gz`
 - Twine check should pass with no errors
 
 ### 2. Test Package Installation
@@ -37,7 +38,7 @@ python -m venv /tmp/test_install
 source /tmp/test_install/bin/activate
 
 # Install from wheel
-pip install python/dist/agentic_guardrails-*.whl
+pip install python/dist/sca_skills-*.whl
 
 # Test import
 python -c "from lint_configs import get_python_config_path, __version__; print(f'Version: {__version__}'); print(f'Config path: {get_python_config_path()}')"
@@ -58,7 +59,7 @@ python -m venv /tmp/test_git_install
 source /tmp/test_git_install/bin/activate
 
 # Install from GitHub (replace 'main' with actual tag when testing)
-pip install git+https://github.com/cajias/lint-configs.git@main#subdirectory=python
+pip install git+https://github.com/cajias/sca-skills.git@main#subdirectory=python
 
 # Test import
 python -c "from lint_configs import __version__; print(f'Version: {__version__}')"
@@ -82,7 +83,7 @@ python -m venv venv
 source venv/bin/activate
 
 # Install the package
-pip install git+https://github.com/cajias/lint-configs.git@main#subdirectory=python
+pip install git+https://github.com/cajias/sca-skills.git@main#subdirectory=python
 
 # Install linting tools
 pip install ruff mypy pylint black
@@ -103,10 +104,10 @@ cat > sample.py << 'EOF'
 
 def hello(name: str) -> str:
     """Greet someone.
-    
+
     Args:
         name: The person to greet
-        
+
     Returns:
         A greeting message
     """

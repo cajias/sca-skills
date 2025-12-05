@@ -1,7 +1,7 @@
 {
-  "name": "@agentic-guardrails/eslint-config",
+  "name": "@sca-skills/eslint-config",
   "version": "1.0.0",
-  "description": "Strict ESLint configuration for AI-generated code quality - mirrors Python package rules",
+  "description": "Strict ESLint configuration for static code analysis",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
@@ -22,21 +22,20 @@
     "typescript",
     "linting",
     "code-quality",
-    "ai-code",
-    "agentic",
-    "guardrails"
+    "sca-skills",
+    "static-code-analysis"
   ],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cajias/agentic-guardrails.git",
+    "url": "https://github.com/cajias/sca-skills.git",
     "directory": "typescript"
   },
   "bugs": {
-    "url": "https://github.com/cajias/agentic-guardrails/issues"
+    "url": "https://github.com/cajias/sca-skills/issues"
   },
-  "homepage": "https://github.com/cajias/agentic-guardrails#readme",
+  "homepage": "https://github.com/cajias/sca-skills#readme",
   "peerDependencies": {
     "eslint": ">=8.0.0",
     "typescript": ">=5.0.0"

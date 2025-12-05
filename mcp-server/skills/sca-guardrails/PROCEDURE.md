@@ -1,10 +1,10 @@
-# Guardrails Procedure
+# SCA Guardrails Procedure
 
 Detailed step-by-step workflow for fixing code quality issues.
 
 ## Prerequisites
 
-- MCP server `guardrails` is configured and accessible
+- MCP server `sca` is configured and accessible
 - Project has TypeScript/JavaScript files to lint
 - Claude has Read and Edit tool access
 
@@ -13,7 +13,7 @@ Detailed step-by-step workflow for fixing code quality issues.
 Call the lint tool to understand the current state:
 
 ```
-guardrails.lint({ path: "." })
+sca.lint({ path: "." })
 ```
 
 Parse the response:
@@ -30,7 +30,7 @@ If `summary.total === 0`, report success and exit.
 Run the automated fixers:
 
 ```
-guardrails.fix({ path: "." })
+sca.fix({ path: "." })
 ```
 
 This executes:
@@ -44,7 +44,7 @@ This executes:
 Lint again to see what remains:
 
 ```
-guardrails.lint({ path: "." })
+sca.lint({ path: "." })
 ```
 
 Now `summary.fixable` should be 0 or near 0.
@@ -100,7 +100,7 @@ Ensure the fix:
 Lint just that file:
 
 ```
-guardrails.lint({ path: issue.file })
+sca.lint({ path: issue.file })
 ```
 
 If the issue is gone, move to the next issue.
@@ -127,7 +127,7 @@ After all Claude-fixable issues are addressed:
 1. Run final lint:
 
 ```
-guardrails.lint({ path: "." })
+sca.lint({ path: "." })
 ```
 
 2. Generate summary:
@@ -197,11 +197,11 @@ guardrails.lint({ path: "." })
 ## Example Session
 
 ```
-User: "Run guardrails on this project"
+User: "Run static analysis on this project"
 
 Claude: Let me assess the code quality.
 
-[Calls guardrails.lint]
+[Calls sca.lint]
 
 Found 47 issues:
 - 38 auto-fixable
@@ -210,7 +210,7 @@ Found 47 issues:
 
 Running auto-fix...
 
-[Calls guardrails.fix]
+[Calls sca.fix]
 
 Auto-fixed 38 issues. Now fixing remaining 6 with Claude...
 

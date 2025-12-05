@@ -1,8 +1,8 @@
 {
-  "name": "agentic-guardrails",
+  "name": "sca-skills",
   "version": "1.0.0",
   "private": true,
-  "description": "AI-powered code quality guardrails with linter configs, MCP server, and Claude skill",
+  "description": "Claude Code skills for static code analysis",
   "workspaces": [
     "typescript",
     "mcp-server"

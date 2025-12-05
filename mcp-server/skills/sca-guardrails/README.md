@@ -1,4 +1,4 @@
-# Agentic Guardrails Skill
+# SCA Guardrails Skill
 
 A Claude Code skill for automatically fixing code quality issues using AI-powered analysis.
 
@@ -16,26 +16,18 @@ This skill runs a complete code quality workflow:
 ### 1. Install the MCP Server
 
 ```bash
-# Global install
-npm install -g @cajias/guardrails-mcp
-
-# Or use npx (recommended)
-npx @cajias/guardrails-mcp
+# Clone the repo
+git clone https://github.com/cajias/sca-skills.git
+cd sca-skills/mcp-server
+npm install && npm run build
 ```
 
 ### 2. Configure Claude Code
 
-Add to your `~/.claude/settings.json`:
+Add the MCP server to Claude Code:
 
-```json
-{
-  "mcpServers": {
-    "guardrails": {
-      "command": "npx",
-      "args": ["@cajias/guardrails-mcp"]
-    }
-  }
-}
+```bash
+claude mcp add sca -- node /path/to/sca-skills/mcp-server/dist/server.js
 ```
 
 ### 3. Install the Skill (Optional)
@@ -44,10 +36,10 @@ Copy the skill files to Claude's skills directory:
 
 ```bash
 # Create skills directory if it doesn't exist
-mkdir -p ~/.claude/skills/guardrails
+mkdir -p ~/.claude/skills/sca-guardrails
 
 # Copy skill files
-cp skill.md PROCEDURE.md README.md ~/.claude/skills/guardrails/
+cp skill.md PROCEDURE.md README.md ~/.claude/skills/sca-guardrails/
 ```
 
 ## Usage
@@ -57,7 +49,7 @@ cp skill.md PROCEDURE.md README.md ~/.claude/skills/guardrails/
 In a Claude Code session:
 
 ```
-You: Run guardrails on this project
+You: Run static analysis on this project
 
 Claude: [Assesses, fixes, and reports results]
 ```
@@ -66,7 +58,7 @@ Claude: [Assesses, fixes, and reports results]
 
 ```bash
 # Run until completion
-claude --skill guardrails /path/to/project
+claude --skill sca-guardrails /path/to/project
 ```
 
 ## What Gets Fixed
@@ -94,7 +86,7 @@ claude --skill guardrails /path/to/project
 
 ## Configuration
 
-The MCP server uses the `@agentic-guardrails/eslint-config` package which includes:
+The MCP server uses the `@sca-skills/eslint-config` package which includes:
 
 - 200+ ESLint rules
 - TypeScript strict mode
@@ -115,7 +107,7 @@ If your project has its own ESLint config, the MCP server will detect and use it
 To customize rules, create or modify your project's `eslint.config.js`:
 
 ```javascript
-import baseConfig from '@agentic-guardrails/eslint-config/flat';
+import baseConfig from '@sca-skills/eslint-config/flat';
 
 export default [
   ...baseConfig,
@@ -139,7 +131,7 @@ export default [
 
 ### "MCP server not found"
 
-Ensure the guardrails MCP server is configured in `~/.claude/settings.json`.
+Ensure the SCA MCP server is configured. Run `claude mcp list` to check.
 
 ### "No issues found" but code has problems
 

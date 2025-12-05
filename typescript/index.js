@@ -1,10 +1,10 @@
 /**
  * Canonical ESLint Configuration for AI-Generated Code
- * 
+ *
  * This package provides strict ESLint configurations that mirror the Python
  * package rules, adapted for JavaScript/TypeScript patterns.
- * 
- * @module @agentic-guardrails/eslint-config
+ *
+ * @module @sca-skills/eslint-config
  */
 
 // Export the legacy configuration (default export)

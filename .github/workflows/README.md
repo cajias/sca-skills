@@ -28,7 +28,7 @@ The workflow automatically creates GitHub Releases using the built-in `GITHUB_TO
 
 1. Go to https://pypi.org/manage/account/token/
 2. Create a new API token
-3. Scope: "Entire account" or specific to `agentic-guardrails`
+3. Scope: "Entire account" or specific to `sca-skills`
 4. Copy the token (starts with `pypi-...`)
 5. Go to your repository on GitHub
 6. Navigate to: **Settings** → **Secrets and variables** → **Actions**
@@ -75,21 +75,25 @@ git push origin v1.0.1
 Users can install packages directly from GitHub:
 
 **Python from a specific version tag:**
+
 ```bash
-pip install git+https://github.com/cajias/lint-configs.git@v1.0.0#subdirectory=python
+pip install git+https://github.com/cajias/sca-skills.git@v1.0.0#subdirectory=python
 ```
 
 **TypeScript from npm (if published):**
+
 ```bash
-npm install @agentic-guardrails/eslint-config@1.0.0
+npm install @sca-skills/eslint-config@1.0.0
 ```
 
 **TypeScript from GitHub Packages:**
+
 ```bash
-npm install @agentic-guardrails/eslint-config@v1.0.0
+npm install @sca-skills/eslint-config@v1.0.0
 ```
 
 **Or download wheel from a release and install:**
+
 1. Go to the Releases page
 2. Download the `.whl` file
 3. Run: `pip install agentic_guardrails-*.whl`
@@ -120,19 +124,23 @@ This will build and check packages without publishing (useful for testing).
 ### Troubleshooting
 
 **"PyPI upload failed" warning:**
+
 - Add `PYPI_API_TOKEN` secret to your repository
 - Make sure the token has correct permissions
 
 **"npm publish failed" warning:**
+
 - Add `NPM_TOKEN` secret to your repository
 - Make sure the token is an "Automation" token with publish access
 - Verify package name is not already taken
 
 **"GitHub Release not created":**
+
 - Make sure you pushed a tag starting with `v` (e.g., `v1.0.0`)
 - Check that the workflow has `contents: write` permission
 
 **Package build fails:**
+
 - Python: Check that `python/pyproject.toml` is valid and version is updated
 - TypeScript: Check that `typescript/package.json` is valid and version is updated
 - Verify all files are included in MANIFEST.in (Python) or package.json files array (TypeScript)
@@ -140,6 +148,7 @@ This will build and check packages without publishing (useful for testing).
 ### Versioning
 
 This project follows [Semantic Versioning](https://semver.org/):
+
 - `v1.0.0` - Major release (breaking changes)
 - `v1.1.0` - Minor release (new features, backwards compatible)
 - `v1.0.1` - Patch release (bug fixes)
@@ -168,16 +177,17 @@ git push origin v1.1.0
 ```
 
 Users can then install with:
+
 ```bash
 # Python from GitHub
-pip install git+https://github.com/cajias/lint-configs.git@v1.1.0#subdirectory=python
+pip install git+https://github.com/cajias/sca-skills.git@v1.1.0#subdirectory=python
 
 # Python from PyPI (if published there)
-pip install agentic-guardrails==1.1.0
+pip install sca-skills==1.1.0
 
 # TypeScript from npm (if published there)
-npm install @agentic-guardrails/eslint-config@1.1.0
+npm install @sca-skills/eslint-config@1.1.0
 
 # TypeScript from GitHub Packages
-npm install @agentic-guardrails/eslint-config@v1.1.0
+npm install @sca-skills/eslint-config@v1.1.0
 ```

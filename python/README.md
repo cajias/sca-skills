@@ -14,7 +14,7 @@ Use Ruff's `extend` feature with the config bundled in the Python package. This 
 
 ```bash
 # 1. Install (or add to requirements-dev.txt)
-pip install agentic-guardrails
+pip install sca-skills
 
 # 2. Get the config path and add to your pyproject.toml
 python -c "from lint_configs import get_ruff_config_path; print(f'[tool.ruff]\nextend = \"{get_ruff_config_path()}\"')"
@@ -37,12 +37,13 @@ When you want to update the configuration:
 
 ```bash
 # Just upgrade the package (like any dependency)
-pip install --upgrade agentic-guardrails
+pip install --upgrade sca-skills
 
 # All projects automatically use the new config - no per-project changes needed!
 ```
 
 **Benefits:**
+
 - ✅ **Version managed**: Use pip to manage versions just like dependencies
 - ✅ **Automatic updates**: `pip install --upgrade` updates all projects
 - ✅ **No version drift**: Lock versions in requirements.txt
@@ -56,7 +57,7 @@ If you prefer a home directory approach (useful for personal projects):
 
 ```bash
 # One-time setup: Download to home directory
-curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"
+curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/sca-skills/main/python/ruff.toml"
 
 # In pyproject.toml:
 [tool.ruff]
@@ -64,7 +65,7 @@ extend = "${HOME}/.ruff.toml"
 target-version = "py39"
 ```
 
-To update: `curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/lint-configs/main/python/ruff.toml"`
+To update: `curl -o ~/.ruff.toml "https://raw.githubusercontent.com/cajias/sca-skills/main/python/ruff.toml"`
 
 **For Other Tools (MyPy, Pylint, Black):**
 
@@ -72,7 +73,7 @@ These tools don't support `extend` from external files, so you'll need to copy t
 
 ```bash
 # Download the full config (includes all tools)
-curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject-linters.toml
+curl https://raw.githubusercontent.com/cajias/sca-skills/main/python/pyproject-linters.toml -o pyproject-linters.toml
 
 # Copy the [tool.mypy], [tool.pylint.*], [tool.black] sections into your pyproject.toml
 # Then delete pyproject-linters.toml
@@ -84,12 +85,13 @@ Copy the configuration directly into your project:
 
 ```bash
 # Download the config file
-curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject-linters.toml -o pyproject.toml
+curl https://raw.githubusercontent.com/cajias/sca-skills/main/python/pyproject-linters.toml -o pyproject.toml
 
 # Or copy just the [tool.*] sections into your existing pyproject.toml
 ```
 
 **Benefits:**
+
 - Complete control over configuration
 - No dependencies
 - Easy to customize per-project
@@ -100,7 +102,7 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 If you previously installed the Python package, you can still use it to get the config path:
 
 ```bash
-pip install agentic-guardrails
+pip install sca-skills
 ```
 
 ```python
@@ -286,6 +288,7 @@ pre-commit run --all-files
 This configuration provides:
 
 ### Ruff
+
 - **40+ rule categories** enabled
 - **Only 2 rules ignored** (Black conflicts: E203, E501)
 - **Line length**: 120 characters
@@ -296,16 +299,19 @@ This configuration provides:
 - **Code clone detection**: Via Pylint (minimum 4 lines)
 
 ### MyPy
+
 - **Strict mode** enabled
 - Full type checking
 - No untyped defs allowed
 
 ### Pylint
+
 - **Duplicate code detection**
 - Min similarity: 4 lines
 - All checks enabled except those conflicting with Ruff
 
 ### Coverage
+
 - **80% minimum** required
 - Branch coverage enabled
 - HTML, XML, and terminal reports
@@ -346,11 +352,13 @@ Pylint's duplicate code detection catches copy-paste programming:
 - **Configurable**: Adjust `min-similarity-lines` if needed
 
 **Run duplicate detection:**
+
 ```bash
 pylint --disable=all --enable=duplicate-code src/
 ```
 
 **Example output:**
+
 ```
 Similar lines in 2 files
 ==UserManager:45
@@ -370,18 +378,21 @@ If you're applying this to an existing project, follow these steps:
 ### Quick Migration Steps
 
 1. **Format first:**
+
    ```bash
    black .
    git commit -am "Apply Black formatting"
    ```
 
 2. **Auto-fix what's possible:**
+
    ```bash
    ruff check . --fix
    git commit -am "Auto-fix linting issues"
    ```
 
 3. **Fix incrementally by category:**
+
    ```bash
    # Imports
    ruff check . --select=I --fix
@@ -397,6 +408,7 @@ If you're applying this to an existing project, follow these steps:
    ```
 
 4. **Add type hints:**
+
    ```bash
    mypy . > mypy-errors.txt
    # Fix file by file
@@ -440,6 +452,7 @@ ignore = ["ANN"]  # Skip ALL type hints (not recommended!)
 ### VS Code
 
 Install extensions:
+
 - Python (ms-python.python)
 - Ruff (charliermarsh.ruff)
 - Pylance (ms-python.vscode-pylance)
@@ -517,13 +530,14 @@ pylint --disable=all --enable=duplicate-code --ignore=tests src/
 ## Support
 
 - **Updates:** Run `git submodule update --remote` to get latest config
-- **Questions:** Open an issue in the lint-configs repository
+- **Questions:** Open an issue in the sca-skills repository
 
 ## Philosophy
 
 This configuration follows the principle: **If it's worth enabling, it's worth enforcing everywhere.**
 
 The only exceptions are:
+
 1. Rules that conflict with Black
 2. Reasonable relaxations for test files
 

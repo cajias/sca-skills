@@ -1,7 +1,7 @@
 [project]
-name = "agentic-guardrails"
+name = "sca-skills"
 version = "1.0.0"
-description = "Strict linting configurations designed to keep AI-generated code quality in check"
+description = "Strict linting configurations for static code analysis"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
@@ -19,9 +19,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cajias/lint-configs"
-Repository = "https://github.com/cajias/lint-configs"
-Issues = "https://github.com/cajias/lint-configs/issues"
+Homepage = "https://github.com/cajias/sca-skills"
+Repository = "https://github.com/cajias/sca-skills"
+Issues = "https://github.com/cajias/sca-skills/issues"
 
 [build-system]
 requires = ["hatchling"]

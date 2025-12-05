@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Agentic Guardrails - Multi-Skill Installation Script
+# SCA Skills - Multi-Skill Installation Script
 # This script copies skill files to Claude Code's skills directory
 
 set -e
@@ -29,7 +29,7 @@ else
 fi
 
 echo ""
-echo -e "${GREEN}Agentic Guardrails MCP Server installed!${NC}"
+echo -e "${GREEN}SCA Skills MCP Server installed!${NC}"
 echo ""
 
 # Find available skills
@@ -74,7 +74,7 @@ echo ""
 # Check if running in non-interactive mode (CI/CD)
 if [ ! -t 0 ]; then
   echo "Non-interactive mode detected. Skipping skill installation."
-  echo "To install manually, run: guardrails-install-skill"
+  echo "To install manually, run: sca-install-skill"
   exit 0
 fi
 
@@ -92,7 +92,7 @@ case "$response" in
   n|N|no|No|NO)
     echo ""
     echo "Skill installation skipped."
-    echo "You can install later by running: guardrails-install-skill"
+    echo "You can install later by running: sca-install-skill"
     exit 0
     ;;
   ""|a|A|all|All|ALL)
@@ -142,7 +142,7 @@ echo ""
 echo "Next steps:"
 echo ""
 echo "  1. Add the MCP server to Claude Code:"
-echo -e "     ${BLUE}claude mcp add guardrails -- npx @cajias/guardrails-mcp${NC}"
+echo -e "     ${BLUE}claude mcp add sca -- npx @cajias/sca-mcp${NC}"
 echo ""
 echo "  2. Use skills in Claude Code:"
 for skill in "${SELECTED_SKILLS[@]}"; do
