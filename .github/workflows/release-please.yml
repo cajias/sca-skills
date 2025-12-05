@@ -1,0 +1,28 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          # Use manifest to handle multiple packages
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      # Outputs from release-please tell you what was released
+      - name: Show release outputs
+        if: steps.release.outputs.releases_created
+        run: |
+          echo "Releases created:"
+          echo '${{ toJSON(steps.release.outputs) }}'
