@@ -73,8 +73,8 @@ The cache file (`.eslintcache`) speeds up subsequent runs.
 #### Option 3: Lint Changed Files Only
 
 ```bash
-# In development
-npx eslint $(git diff --name-only --diff-filter=ACMRTUXB | grep -E '\.(ts|tsx|js|jsx)$')
+# In development - safe from command injection
+git diff --name-only --diff-filter=ACMRTUXB -z | grep -zE '\.(ts|tsx|js|jsx)$' | xargs -0 npx eslint --
 ```
 
 ## "Rules Are Too Strict"

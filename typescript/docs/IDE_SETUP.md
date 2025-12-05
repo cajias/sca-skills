@@ -211,8 +211,7 @@ Configure for TypeScript:
 ```elisp
 (defun eslint-fix-file ()
   (interactive)
-  (shell-command
-   (concat "npx eslint --fix " (buffer-file-name))))
+  (call-process "npx" nil nil nil "eslint" "--fix" (buffer-file-name)))
 
 (add-hook 'after-save-hook
           (lambda ()
