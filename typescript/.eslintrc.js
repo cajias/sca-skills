@@ -4,9 +4,9 @@
 
 module.exports = {
   root: true,
-  
+
   parser: '@typescript-eslint/parser',
-  
+
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -32,15 +32,7 @@ module.exports = {
     'prettier', // Must be last to override conflicting rules
   ],
 
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'security',
-    'sonarjs',
-    'unicorn',
-    'promise',
-    'n',
-  ],
+  plugins: ['@typescript-eslint', 'import', 'security', 'sonarjs', 'unicorn', 'promise', 'n'],
 
   settings: {
     'import/resolver': {
@@ -65,11 +57,14 @@ module.exports = {
     // ============================================================
     // TYPESCRIPT STRICT CHECKS (mirrors Python ANN/mypy)
     // ============================================================
-    '@typescript-eslint/explicit-function-return-type': ['error', {
-      allowExpressions: false,
-      allowTypedFunctionExpressions: true,
-      allowHigherOrderFunctions: true,
-    }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: false,
+        allowTypedFunctionExpressions: true,
+        allowHigherOrderFunctions: true,
+      },
+    ],
     '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unsafe-assignment': 'error',
@@ -86,22 +81,25 @@ module.exports = {
     // DEAD CODE DETECTION (mirrors Python F401, F841, ERA, ARG)
     // ============================================================
     'no-unused-vars': 'off', // Use TypeScript version
-    '@typescript-eslint/no-unused-vars': ['error', {
-      argsIgnorePattern: '^_',
-      varsIgnorePattern: '^_',
-      caughtErrorsIgnorePattern: '^_',
-    }],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
     '@typescript-eslint/no-unused-expressions': 'error',
     'no-unreachable': 'error',
     'no-constant-condition': 'error',
     'no-useless-return': 'error',
     'no-useless-escape': 'error',
     // Note: unicorn/no-commented-out-code requires v51+ (commented code detection)
-    
+
     // ============================================================
     // COMPLEXITY LIMITS (mirrors Python C90, PLR)
     // ============================================================
-    'complexity': ['error', 10], // Max cyclomatic complexity
+    complexity: ['error', 10], // Max cyclomatic complexity
     'max-depth': ['error', 4], // Max nesting depth
     'max-lines-per-function': ['error', { max: 50, skipBlankLines: true, skipComments: true }],
     'max-params': ['error', 5], // Max function parameters
@@ -124,18 +122,18 @@ module.exports = {
     // ============================================================
     // CODE QUALITY & BEST PRACTICES
     // ============================================================
-    
+
     // Avoid common bugs (mirrors Python B, PIE)
-    'eqeqeq': ['error', 'always'], // Require === and !==
+    eqeqeq: ['error', 'always'], // Require === and !==
     'no-var': 'error', // Use let/const
     'prefer-const': 'error',
     'no-eval': 'error',
     'no-implied-eval': 'error',
     'no-new-func': 'error',
     '@typescript-eslint/no-implied-eval': 'error',
-    
+
     // Naming conventions (mirrors Python N)
-    'camelcase': ['error', { properties: 'never', ignoreDestructuring: true }],
+    camelcase: ['error', { properties: 'never', ignoreDestructuring: true }],
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -166,20 +164,14 @@ module.exports = {
     'require-atomic-updates': 'error',
 
     // Import organization (mirrors Python I, isort)
-    'import/order': ['error', {
-      'groups': [
-        'builtin',
-        'external',
-        'internal',
-        'parent',
-        'sibling',
-        'index',
-        'object',
-        'type',
-      ],
-      'newlines-between': 'always',
-      'alphabetize': { order: 'asc', caseInsensitive: true },
-    }],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
     'import/no-duplicates': 'error',
     'import/no-unresolved': 'error',
     'import/no-cycle': 'error',
