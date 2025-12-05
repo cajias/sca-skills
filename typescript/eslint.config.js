@@ -16,6 +16,7 @@ const noOnlyTestsPlugin = require('eslint-plugin-no-only-tests');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooksPlugin = require('eslint-plugin-react-hooks');
 const jsxA11yPlugin = require('eslint-plugin-jsx-a11y');
+const noUnsanitizedPlugin = require('eslint-plugin-no-unsanitized');
 
 module.exports = [
   {
@@ -53,6 +54,7 @@ module.exports = [
       n: nodePlugin,
       prettier: prettierPlugin,
       'no-only-tests': noOnlyTestsPlugin,
+      'no-unsanitized': noUnsanitizedPlugin,
     },
 
     rules: {
@@ -67,6 +69,10 @@ module.exports = [
       'security/detect-no-csrf-before-method-override': 'error',
       'security/detect-possible-timing-attacks': 'error',
       'security/detect-pseudoRandomBytes': 'error',
+
+      // XSS Protection - Prevent unsafe DOM manipulation
+      'no-unsanitized/method': 'error', // Disallow unsafe methods like document.write(), insertAdjacentHTML()
+      'no-unsanitized/property': 'error', // Disallow unsafe property assignments like innerHTML, outerHTML
 
       // ============================================================
       // TYPESCRIPT STRICT CHECKS (mirrors Python ANN/mypy)
@@ -199,9 +205,42 @@ module.exports = [
       'unicorn/prefer-module': 'error',
       'unicorn/prefer-node-protocol': 'error',
 
-      // Node.js best practices
+      // ============================================================
+      // NODE.JS BEST PRACTICES (critical for backend applications)
+      // ============================================================
+
+      // Deprecated APIs and process management
       'n/no-deprecated-api': 'error',
       'n/no-process-exit': 'error',
+
+      // Path handling (prevent cross-platform issues)
+      'n/no-path-concat': 'error', // Use path.join() instead of string concatenation
+
+      // Module management (catch issues at lint time)
+      'n/no-missing-import': 'error', // Detect non-existent imports
+      'n/no-missing-require': 'error', // Detect non-existent requires
+      'n/no-extraneous-import': 'error', // Ensure dependencies are listed in package.json
+      'n/no-extraneous-require': 'error',
+
+      // Publishing safety
+      'n/no-unpublished-import': 'error', // Prevent importing dev dependencies in production code
+      'n/no-unpublished-require': 'error',
+
+      // Callback error handling (prevent silent failures)
+      'n/handle-callback-err': 'error', // Require error handling in callbacks
+      'n/no-callback-literal': 'error', // Enforce error-first callback pattern
+
+      // Module loading best practices
+      'n/no-new-require': 'error', // Disallow new require()
+      'n/exports-style': ['error', 'module.exports'], // Consistent export style
+
+      // Performance warnings
+      'n/no-sync': 'warn', // Warn about blocking operations (fs.readFileSync, etc.)
+
+      // Modern Node.js patterns
+      'n/prefer-promises/dns': 'error', // Use promise-based DNS
+      'n/prefer-promises/fs': 'error', // Use promise-based file system APIs
+      'n/hashbang': 'error', // Correct shebang for executable scripts
 
       // Prevent common issues
       'no-console': 'warn', // Warn on console.log (allow with comment)
