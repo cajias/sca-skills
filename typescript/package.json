@@ -1,6 +1,6 @@
 {
   "name": "@sca-skills/eslint-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Strict ESLint configuration for static code analysis",
   "main": "index.js",
   "exports": {
