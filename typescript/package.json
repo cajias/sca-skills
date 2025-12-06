@@ -30,13 +30,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cajias/sca-skills.git",
+    "url": "https://github.com/cajias/lint-configs.git",
     "directory": "typescript"
   },
   "bugs": {
-    "url": "https://github.com/cajias/sca-skills/issues"
+    "url": "https://github.com/cajias/lint-configs/issues"
   },
-  "homepage": "https://github.com/cajias/sca-skills#readme",
+  "homepage": "https://github.com/cajias/lint-configs#readme",
   "peerDependencies": {
     "eslint": ">=8.0.0",
     "typescript": ">=5.0.0"

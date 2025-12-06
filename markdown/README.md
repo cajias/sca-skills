@@ -286,8 +286,8 @@ This configuration:
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/cajias/sca-skills/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/cajias/sca-skills/discussions)
+- **Issues:** [GitHub Issues](https://github.com/cajias/lint-configs/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/cajias/lint-configs/discussions)
 
 ## Contributing
 

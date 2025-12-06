@@ -19,9 +19,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cajias/sca-skills"
-Repository = "https://github.com/cajias/sca-skills"
-Issues = "https://github.com/cajias/sca-skills/issues"
+Homepage = "https://github.com/cajias/lint-configs"
+Repository = "https://github.com/cajias/lint-configs"
+Issues = "https://github.com/cajias/lint-configs/issues"
 
 [build-system]
 requires = ["hatchling"]

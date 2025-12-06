@@ -4,12 +4,14 @@ This file provides context and guidelines for GitHub Copilot coding agent when w
 
 ## Project Overview
 
-**sca-skills** (formerly `sca-skills`) is a collection of strict, opinionated linter configurations for multiple programming languages. The project's philosophy is: **"If it's worth enabling, it's worth enforcing everywhere."**
+**lint-configs** (formerly `sca-skills`) is a collection of strict, opinionated linter configurations for
+multiple programming languages. The project's philosophy is: **"If it's worth enabling, it's worth enforcing
+everywhere."**
 
 ### Repository Structure
 
-```
-sca-skills/
+```text
+lint-configs/
 ├── .github/                    # GitHub configuration
 │   ├── workflows/              # CI/CD workflows
 │   └── copilot-instructions.md # This file
@@ -70,7 +72,7 @@ This project enforces the same strict linting rules it provides to others:
 
 ```bash
 # Clone repository
-git clone https://github.com/cajias/sca-skills.git
+git clone https://github.com/cajias/lint-configs.git
 cd sca-skills
 
 # Set up Python environment (for Python package development)

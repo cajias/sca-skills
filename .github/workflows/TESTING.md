@@ -59,7 +59,7 @@ python -m venv /tmp/test_git_install
 source /tmp/test_git_install/bin/activate
 
 # Install from GitHub (replace 'main' with actual tag when testing)
-pip install git+https://github.com/cajias/sca-skills.git@main#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@main#subdirectory=python
 
 # Test import
 python -c "from lint_configs import __version__; print(f'Version: {__version__}')"
@@ -83,7 +83,7 @@ python -m venv venv
 source venv/bin/activate
 
 # Install the package
-pip install git+https://github.com/cajias/sca-skills.git@main#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@main#subdirectory=python
 
 # Install linting tools
 pip install ruff mypy pylint black

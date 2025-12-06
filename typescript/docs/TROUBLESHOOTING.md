@@ -582,7 +582,7 @@ If you're still stuck:
 1. **Check the error message carefully** - it usually tells you exactly what's wrong
 
 2. **Search existing issues:**
-   - [This project's issues](https://github.com/cajias/sca-skills/issues)
+   - [This project's issues](https://github.com/cajias/lint-configs/issues)
    - [ESLint issues](https://github.com/eslint/eslint/issues)
    - Plugin-specific issues
 

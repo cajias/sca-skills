@@ -60,13 +60,13 @@ Once published, users can install the package:
 ### Option 1: From Git (Recommended)
 
 ```bash
-pip install git+https://github.com/cajias/sca-skills.git@v1.0.1#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@v1.0.1#subdirectory=python
 ```
 
 ### Option 2: In requirements.txt
 
 ```txt
-sca-skills @ git+https://github.com/cajias/sca-skills.git@v1.0.1#subdirectory=python
+sca-skills @ git+https://github.com/cajias/lint-configs.git@v1.0.1#subdirectory=python
 ```
 
 ### Option 3: Download from Release
@@ -175,11 +175,11 @@ git push origin main
 git push origin v1.0.1
 
 # Done! Check Actions tab to watch progress
-# Release will appear at: https://github.com/cajias/sca-skills/releases
+# Release will appear at: https://github.com/cajias/lint-configs/releases
 ```
 
 Users can then immediately install:
 
 ```bash
-pip install git+https://github.com/cajias/sca-skills.git@v1.0.1#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@v1.0.1#subdirectory=python
 ```

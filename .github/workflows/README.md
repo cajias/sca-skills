@@ -2,7 +2,8 @@
 
 ## Publish Workflow
 
-The `publish.yml` workflow automatically builds and publishes packages for multiple languages when you create a new version tag.
+The `publish.yml` workflow automatically builds and publishes packages for multiple languages when you create a
+new version tag.
 
 ### How It Works
 
@@ -18,7 +19,7 @@ The `publish.yml` workflow automatically builds and publishes packages for multi
 
 ### Setup Instructions
 
-#### No Setup Required!
+#### No Setup Required
 
 The workflow automatically creates GitHub Releases using the built-in `GITHUB_TOKEN`. No secrets needed!
 
@@ -26,7 +27,7 @@ The workflow automatically creates GitHub Releases using the built-in `GITHUB_TO
 
 **To publish Python to PyPI:**
 
-1. Go to https://pypi.org/manage/account/token/
+1. Go to <https://pypi.org/manage/account/token/>
 2. Create a new API token
 3. Scope: "Entire account" or specific to `sca-skills`
 4. Copy the token (starts with `pypi-...`)
@@ -38,7 +39,7 @@ The workflow automatically creates GitHub Releases using the built-in `GITHUB_TO
 
 **To publish TypeScript/JavaScript to npm:**
 
-1. Go to https://www.npmjs.com/settings/[username]/tokens
+1. Go to <https://www.npmjs.com/settings/[username]/tokens>
 2. Create a new "Automation" token
 3. Copy the token
 4. Go to your repository on GitHub
@@ -77,7 +78,7 @@ Users can install packages directly from GitHub:
 **Python from a specific version tag:**
 
 ```bash
-pip install git+https://github.com/cajias/sca-skills.git@v1.0.0#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@v1.0.0#subdirectory=python
 ```
 
 **TypeScript from npm (if published):**
@@ -180,7 +181,7 @@ Users can then install with:
 
 ```bash
 # Python from GitHub
-pip install git+https://github.com/cajias/sca-skills.git@v1.1.0#subdirectory=python
+pip install git+https://github.com/cajias/lint-configs.git@v1.1.0#subdirectory=python
 
 # Python from PyPI (if published there)
 pip install sca-skills==1.1.0

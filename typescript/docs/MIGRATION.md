@@ -295,7 +295,7 @@ npm run build
 If you get stuck:
 
 1. Check [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for common issues
-2. Search existing [GitHub issues](https://github.com/cajias/sca-skills/issues)
+2. Search existing [GitHub issues](https://github.com/cajias/lint-configs/issues)
 3. Open a new issue with:
    - The rule causing problems
    - A minimal code example
