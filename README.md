@@ -1,4 +1,4 @@
-# SCA Skills - Shareable Linting Configurations
+# Lint Configs - Shareable Linting Configurations
 
 Comprehensive, strict linting configurations for TypeScript/JavaScript, Python, and Markdown.
 Designed to enforce best practices and catch issues in AI-generated code.
