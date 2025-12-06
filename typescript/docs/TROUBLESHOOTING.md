@@ -41,7 +41,7 @@ Create separate configs for editor and CI:
 
 ```javascript
 // eslint.config.js (fast, for editor)
-import baseConfig from '@sca-skills/eslint-config/flat';
+import baseConfig from '@lint-configs/eslint-config/flat';
 
 export default [
   ...baseConfig,
@@ -382,7 +382,7 @@ ls .eslintrc.js      # For ESLint 8
 npx eslint --print-config src/index.ts
 ```
 
-## "Cannot Find Module '@sca-skills/eslint-config'"
+## "Cannot Find Module '@lint-configs/eslint-config'"
 
 ### Problem
 
@@ -396,10 +396,10 @@ Package not installed or wrong package name.
 
 ```bash
 # Install the package
-npm install --save-dev @sca-skills/eslint-config
+npm install --save-dev @lint-configs/eslint-config
 
 # Verify it's installed
-npm list @sca-skills/eslint-config
+npm list @lint-configs/eslint-config
 ```
 
 ## "Parsing Error: Cannot Read File tsconfig.json"

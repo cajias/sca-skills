@@ -84,13 +84,13 @@ pip install git+https://github.com/cajias/lint-configs.git@v1.0.0#subdirectory=p
 **TypeScript from npm (if published):**
 
 ```bash
-npm install @sca-skills/eslint-config@1.0.0
+npm install @lint-configs/eslint-config@1.0.0
 ```
 
 **TypeScript from GitHub Packages:**
 
 ```bash
-npm install @sca-skills/eslint-config@v1.0.0
+npm install @lint-configs/eslint-config@v1.0.0
 ```
 
 **Or download wheel from a release and install:**
@@ -187,8 +187,8 @@ pip install git+https://github.com/cajias/lint-configs.git@v1.1.0#subdirectory=p
 pip install sca-skills==1.1.0
 
 # TypeScript from npm (if published there)
-npm install @sca-skills/eslint-config@1.1.0
+npm install @lint-configs/eslint-config@1.1.0
 
 # TypeScript from GitHub Packages
-npm install @sca-skills/eslint-config@v1.1.0
+npm install @lint-configs/eslint-config@v1.1.0
 ```

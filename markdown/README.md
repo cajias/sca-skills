@@ -19,7 +19,7 @@ Compatible with markdownlint-cli 0.35.0+
 ### Installation
 
 ```bash
-npm install --save-dev @sca-skills/markdownlint-config markdownlint-cli
+npm install --save-dev @lint-configs/markdownlint-config markdownlint-cli
 ```
 
 ### Basic Setup
@@ -28,7 +28,7 @@ Create a `.markdownlint.json` in your project root:
 
 ```json
 {
-  "extends": "@sca-skills/markdownlint-config"
+  "extends": "@lint-configs/markdownlint-config"
 }
 ```
 
@@ -36,7 +36,7 @@ Or use the config directly:
 
 ```bash
 # Using the package directly
-npx markdownlint -c node_modules/@sca-skills/markdownlint-config/.markdownlint.json '**/*.md'
+npx markdownlint -c node_modules/@lint-configs/markdownlint-config/.markdownlint.json '**/*.md'
 ```
 
 ### Usage
@@ -178,7 +178,7 @@ jobs:
 
 ```json
 {
-  "extends": "@sca-skills/markdownlint-config",
+  "extends": "@lint-configs/markdownlint-config",
   "MD013": {
     "line_length": 100
   }
@@ -189,7 +189,7 @@ jobs:
 
 ```json
 {
-  "extends": "@sca-skills/markdownlint-config",
+  "extends": "@lint-configs/markdownlint-config",
   "MD013": false
 }
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "@sca-skills/eslint-config",
+  "name": "@lint-configs/eslint-config",
   "version": "1.0.2",
   "description": "Strict ESLint configuration for static code analysis",
   "main": "index.js",

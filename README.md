@@ -7,8 +7,8 @@ Designed to enforce best practices and catch issues in AI-generated code.
 
 This repository contains shareable linting configurations published to npm:
 
-- **[@sca-skills/eslint-config](./typescript/)** - ESLint configuration with 220+ rules
-- **[@sca-skills/markdownlint-config](./markdown/)** - Markdownlint configuration with 40+ rules
+- **[@lint-configs/eslint-config](./typescript/)** - ESLint configuration with 220+ rules
+- **[@lint-configs/markdownlint-config](./markdown/)** - Markdownlint configuration with 40+ rules
 - **[Python configs](./python/)** - Ruff, MyPy, Black, and Pylint configurations
 
 ## Quick Start
@@ -16,13 +16,13 @@ This repository contains shareable linting configurations published to npm:
 ### TypeScript/JavaScript
 
 ```bash
-npm install --save-dev @sca-skills/eslint-config eslint typescript
+npm install --save-dev @lint-configs/eslint-config eslint typescript
 ```
 
 Create `eslint.config.js`:
 
 ```javascript
-import config from '@sca-skills/eslint-config/flat';
+import config from '@lint-configs/eslint-config/flat';
 
 export default [
   ...config,
@@ -39,14 +39,14 @@ export default [
 ### Markdown
 
 ```bash
-npm install --save-dev @sca-skills/markdownlint-config markdownlint-cli
+npm install --save-dev @lint-configs/markdownlint-config markdownlint-cli
 ```
 
 Create `.markdownlint.json`:
 
 ```json
 {
-  "extends": "@sca-skills/markdownlint-config"
+  "extends": "@lint-configs/markdownlint-config"
 }
 ```
 
@@ -65,7 +65,7 @@ extend = "python/ruff.toml"
 
 ## Features
 
-### TypeScript/JavaScript (@sca-skills/eslint-config)
+### TypeScript/JavaScript (@lint-configs/eslint-config)
 
 - **220+ rules** across multiple ESLint plugins
 - **Security** - XSS protection, eval prevention, unsafe regex detection
@@ -76,7 +76,7 @@ extend = "python/ruff.toml"
 
 [Full documentation →](./typescript/README.md)
 
-### Markdown (@sca-skills/markdownlint-config)
+### Markdown (@lint-configs/markdownlint-config)
 
 - **40+ markdown rules** for documentation quality
 - **120 character line length** limit

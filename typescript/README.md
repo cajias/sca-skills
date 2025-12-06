@@ -19,7 +19,7 @@ Compatible with ESLint 9 flat config and ESLint 8 legacy config.
 ### Installation
 
 ```bash
-npm install --save-dev @sca-skills/eslint-config
+npm install --save-dev @lint-configs/eslint-config
 ```
 
 ### Basic Setup
@@ -28,7 +28,7 @@ npm install --save-dev @sca-skills/eslint-config
 
 ```javascript
 // eslint.config.js
-import config from '@sca-skills/eslint-config/flat';
+import config from '@lint-configs/eslint-config/flat';
 
 export default [
   ...config,
@@ -47,7 +47,7 @@ export default [
 ```javascript
 // .eslintrc.js
 module.exports = {
-  extends: ['@sca-skills/eslint-config/legacy'],
+  extends: ['@lint-configs/eslint-config/legacy'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -178,7 +178,7 @@ jobs:
 
 ```javascript
 // eslint.config.js
-import config from '@sca-skills/eslint-config/flat';
+import config from '@lint-configs/eslint-config/flat';
 
 export default [
   ...config,

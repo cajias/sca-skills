@@ -4,7 +4,7 @@
  * This package provides strict ESLint configurations that mirror the Python
  * package rules, adapted for JavaScript/TypeScript patterns.
  *
- * @module @sca-skills/eslint-config
+ * @module @lint-configs/eslint-config
  */
 
 // Export the legacy configuration (default export)

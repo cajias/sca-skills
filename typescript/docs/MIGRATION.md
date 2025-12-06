@@ -158,7 +158,7 @@ Apply strict rules to new code, relax rules for legacy code:
 
 ```javascript
 // eslint.config.js
-import baseConfig from '@sca-skills/eslint-config/flat';
+import baseConfig from '@lint-configs/eslint-config/flat';
 
 export default [
   ...baseConfig,
@@ -183,7 +183,7 @@ Start with less strict rules, gradually tighten:
 
 ```javascript
 // eslint.config.js
-import baseConfig from '@sca-skills/eslint-config/flat';
+import baseConfig from '@lint-configs/eslint-config/flat';
 
 export default [
   ...baseConfig,
