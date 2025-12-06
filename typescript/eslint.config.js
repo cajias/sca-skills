@@ -131,8 +131,7 @@ module.exports = [
       // ERROR HANDLING (mirrors Python TRY, BLE)
       // ============================================================
       'no-throw-literal': 'error',
-      '@typescript-eslint/no-throw-literal': 'error',
-      // Note: @typescript-eslint/only-throw-error requires v7+
+      '@typescript-eslint/only-throw-error': 'error',
       'promise/catch-or-return': 'error',
       'promise/no-return-wrap': 'error',
       'promise/param-names': 'error',
