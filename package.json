@@ -5,8 +5,7 @@
   "description": "Claude Code skills for static code analysis",
   "workspaces": [
     "typescript",
-    "markdown",
-    "mcp-server"
+    "markdown"
   ],
   "scripts": {
     "lint": "npm run lint:js && npm run lint:md",
@@ -17,8 +16,6 @@
     "lint:md:fix": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**' --fix",
     "format": "npx prettier --write '**/*.{ts,tsx,js,jsx,json,md}' --ignore-path .gitignore",
     "format:check": "npx prettier --check '**/*.{ts,tsx,js,jsx,json,md}' --ignore-path .gitignore",
-    "build": "npm run build --workspace=mcp-server",
-    "typecheck": "npx tsc --noEmit --project mcp-server/tsconfig.json",
     "commitlint": "npx commitlint --edit",
     "prepare": "husky"
   },
