@@ -54,25 +54,6 @@ jobs:
           echo "📦 Built TypeScript package"
           ls -la
 
-      - name: Build Markdown package
-        run: |
-          cd markdown
-          npm ci --ignore-scripts || echo "No dependencies to install"
-          echo "📦 Built Markdown package"
-          ls -la
-
-      - name: Create npm tarballs
-        run: |
-          cd typescript
-          npm pack
-          mv *.tgz ../
-          cd ../markdown
-          npm pack
-          mv *.tgz ../
-          cd ..
-          echo "📦 Created tarballs:"
-          ls -la *.tgz
-
       # Publish Python to PyPI
       - name: Publish Python to PyPI (Optional)
         # Only publish to PyPI if PYPI_API_TOKEN secret is set
@@ -122,7 +103,7 @@ jobs:
         with:
           files: |
             python/dist/*
-            *.tgz
+            typescript/package.json
           generate_release_notes: true
           body: |
             ## 📦 Lint Configurations Release
@@ -146,18 +127,12 @@ jobs:
             ```bash
             # Install from npm (if published)
             npm install @sca-skills/eslint-config
-            npm install @sca-skills/markdownlint-config
 
-            # Install from release tarballs
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-eslint-config-<version>.tgz
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-markdownlint-config-<version>.tgz
-
-            # Or install from Git
-            npm install git+https://github.com/${{ github.repository }}.git#subdirectory=typescript
-            npm install git+https://github.com/${{ github.repository }}.git#subdirectory=markdown
+            # Or install from GitHub Packages
+            npm install @sca-skills/eslint-config@${{ github.ref_name }}
             ```
 
-            See [TypeScript README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/typescript) and [Markdown README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/markdown) for usage.
+            See [TypeScript README](https://github.com/${{ github.repository }}/tree/${{ github.ref_name }}/typescript) for usage.
 
             ## What's Included
 
