@@ -64,11 +64,11 @@ jobs:
       - name: Create npm tarballs
         run: |
           cd typescript
-          npm pack
-          mv *.tgz ../
+          TARBALL=$(npm pack)
+          mv "$TARBALL" ../
           cd ../markdown
-          npm pack
-          mv *.tgz ../
+          TARBALL=$(npm pack)
+          mv "$TARBALL" ../
           cd ..
           echo "📦 Created tarballs:"
           ls -la *.tgz
@@ -148,9 +148,9 @@ jobs:
             npm install @sca-skills/eslint-config
             npm install @sca-skills/markdownlint-config
 
-            # Install from release tarballs
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-eslint-config-<version>.tgz
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-markdownlint-config-<version>.tgz
+            # Install from release tarballs (replace version numbers with actual versions from release assets)
+            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-eslint-config-1.0.2.tgz
+            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-markdownlint-config-1.0.0.tgz
 
             # Or install from Git
             npm install git+https://github.com/${{ github.repository }}.git#subdirectory=typescript
